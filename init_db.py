@@ -1,3 +1,4 @@
+import uuid
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, Sentence, WordOption
@@ -108,10 +109,10 @@ sample_sentences = [
         "tense": "present",
         "difficulty_level": 2,
         "options": [
-            {"word": "pieczą", "is_correct": True},
-            {"word": "piecze", "is_correct": False},
-            {"word": "pieczemy", "is_correct": False},
-            {"word": "piecą", "is_correct": False}
+            {"unique_id": str(uuid.uuid4()), "word": "pieczą", "is_correct": True},
+            {"unique_id": str(uuid.uuid4()), "word": "piecze", "is_correct": False},
+            {"unique_id": str(uuid.uuid4()), "word": "pieczemy", "is_correct": False},
+            {"unique_id": str(uuid.uuid4()), "word": "piecą", "is_correct": False}
         ]
     },
     {

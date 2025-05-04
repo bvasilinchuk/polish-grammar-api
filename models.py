@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+import uuid
 
 Base = declarative_base()
 
@@ -8,6 +9,7 @@ class WordOption(Base):
     __tablename__ = "word_options"
 
     id = Column(Integer, primary_key=True, index=True)
+    unique_id = Column(String, default=lambda: str(uuid.uuid4()), unique=True, nullable=False)
     word = Column(String)
     is_correct = Column(Boolean)
     sentence_id = Column(Integer, ForeignKey("sentences.id"))
