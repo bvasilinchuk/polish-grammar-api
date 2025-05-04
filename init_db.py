@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Base, Sentence
+from models import Base, Sentence, WordOption
 
 # Create the database engine
 SQLALCHEMY_DATABASE_URL = "sqlite:///./polish_grammar.db"
@@ -13,113 +13,144 @@ Base.metadata.create_all(bind=engine)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 db = SessionLocal()
 
-# Add more diverse Polish sentences
+# Add more diverse Polish sentences with multiple choice options
 sample_sentences = [
     {
         "sentence": "On ___________ (jeść) obiad.",
-        "verb_form": "je",
         "tense": "present",
-        "difficulty_level": 1
+        "difficulty_level": 1,
+        "options": [
+            {"word": "je", "is_correct": True},
+            {"word": "jedzie", "is_correct": False},
+            {"word": "jedł", "is_correct": False},
+            {"word": "jedziemy", "is_correct": False}
+        ]
     },
     {
         "sentence": "Wczoraj oni ___________ (iść) do szkoły.",
-        "verb_form": "szli",
         "tense": "past",
-        "difficulty_level": 2
+        "difficulty_level": 2,
+        "options": [
+            {"word": "szli", "is_correct": True},
+            {"word": "szedł", "is_correct": False},
+            {"word": "idą", "is_correct": False},
+            {"word": "idziemy", "is_correct": False}
+        ]
     },
     {
         "sentence": "Ona ___________ (być) w domu.",
-        "verb_form": "jest",
         "tense": "present",
-        "difficulty_level": 1
+        "difficulty_level": 1,
+        "options": [
+            {"word": "jest", "is_correct": True},
+            {"word": "była", "is_correct": False},
+            {"word": "są", "is_correct": False},
+            {"word": "był", "is_correct": False}
+        ]
     },
     {
         "sentence": "Oni ___________ (móc) pomóc.",
-        "verb_form": "mogą",
         "tense": "present",
-        "difficulty_level": 2
+        "difficulty_level": 2,
+        "options": [
+            {"word": "mogą", "is_correct": True},
+            {"word": "mogę", "is_correct": False},
+            {"word": "mogli", "is_correct": False},
+            {"word": "mogę", "is_correct": False}
+        ]
     },
     {
         "sentence": "On ___________ (piec) ciasto.",
-        "verb_form": "piecze",
         "tense": "present",
-        "difficulty_level": 2
+        "difficulty_level": 2,
+        "options": [
+            {"word": "piecze", "is_correct": True},
+            {"word": "piecze", "is_correct": False},
+            {"word": "piecą", "is_correct": False},
+            {"word": "pieczemy", "is_correct": False}
+        ]
     },
     {
         "sentence": "My ___________ (czytać) książkę.",
-        "verb_form": "czytamy",
         "tense": "present",
-        "difficulty_level": 2
+        "difficulty_level": 2,
+        "options": [
+            {"word": "czytamy", "is_correct": True},
+            {"word": "czyta", "is_correct": False},
+            {"word": "czytają", "is_correct": False},
+            {"word": "czytał", "is_correct": False}
+        ]
     },
     {
         "sentence": "Ona ___________ (płakać) wczoraj.",
-        "verb_form": "plakała",
         "tense": "past",
-        "difficulty_level": 2
+        "difficulty_level": 2,
+        "options": [
+            {"word": "plakała", "is_correct": True},
+            {"word": "płakał", "is_correct": False},
+            {"word": "płacze", "is_correct": False},
+            {"word": "płakały", "is_correct": False}
+        ]
     },
     {
         "sentence": "Oni ___________ (być) zadowoleni.",
-        "verb_form": "są",
         "tense": "present",
-        "difficulty_level": 1
-    },
-    {
-        "sentence": "On ___________ (piec) ciasto.",
-        "verb_form": "piecze",
-        "tense": "present",
-        "difficulty_level": 2
-    },
-    {
-        "sentence": "My ___________ (piec) ciasto.",
-        "verb_form": "pieczemy",
-        "tense": "present",
-        "difficulty_level": 2
+        "difficulty_level": 1,
+        "options": [
+            {"word": "są", "is_correct": True},
+            {"word": "jest", "is_correct": False},
+            {"word": "byli", "is_correct": False},
+            {"word": "były", "is_correct": False}
+        ]
     },
     {
         "sentence": "Oni ___________ (piec) ciasto.",
-        "verb_form": "pieczą",
         "tense": "present",
-        "difficulty_level": 2
+        "difficulty_level": 2,
+        "options": [
+            {"word": "pieczą", "is_correct": True},
+            {"word": "piecze", "is_correct": False},
+            {"word": "pieczemy", "is_correct": False},
+            {"word": "piecą", "is_correct": False}
+        ]
     },
     {
         "sentence": "Ona ___________ (piec) ciasto.",
-        "verb_form": "piecze",
         "tense": "present",
-        "difficulty_level": 2
-    },
-    {
-        "sentence": "On ___________ (piec) ciasto.",
-        "verb_form": "piecze",
-        "tense": "present",
-        "difficulty_level": 2
-    },
-    {
-        "sentence": "My ___________ (piec) ciasto.",
-        "verb_form": "pieczemy",
-        "tense": "present",
-        "difficulty_level": 2
-    },
-    {
-        "sentence": "Oni ___________ (piec) ciasto.",
-        "verb_form": "pieczą",
-        "tense": "present",
-        "difficulty_level": 2
-    },
-    {
-        "sentence": "Ona ___________ (piec) ciasto.",
-        "verb_form": "piecze",
-        "tense": "present",
-        "difficulty_level": 2
+        "difficulty_level": 2,
+        "options": [
+            {"word": "piecze", "is_correct": True},
+            {"word": "pieczą", "is_correct": False},
+            {"word": "pieczemy", "is_correct": False},
+            {"word": "piecą", "is_correct": False}
+        ]
     }
 ]
 
 # First delete all existing sentences
 db.query(Sentence).delete()
 
-# Add sample sentences to the database
+# Add sentences and their options to the database
 for sentence_data in sample_sentences:
-    sentence = Sentence(**sentence_data)
+    sentence = Sentence(
+        sentence=sentence_data["sentence"],
+        tense=sentence_data["tense"],
+        difficulty_level=sentence_data["difficulty_level"]
+    )
     db.add(sentence)
+    db.flush()  # Get the id of the newly created sentence
+    
+    # Add word options
+    for option_data in sentence_data["options"]:
+        option = WordOption(
+            word=option_data["word"],
+            is_correct=option_data["is_correct"],
+            sentence_id=sentence.id
+        )
+        db.add(option)
 
+# Commit the changes
 db.commit()
+
+print("Database initialized successfully with multiple choice options!")
 db.close()

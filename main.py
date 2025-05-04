@@ -1,12 +1,13 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
-from sqlalchemy import create_engine, Column, Integer, String, func
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from pydantic import BaseModel
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 import os
+import random
 
 app = FastAPI(
     title="Polish Grammar API",
@@ -33,35 +34,46 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
+class WordOption(Base):
+    __tablename__ = "word_options"
+
+    id = Column(Integer, primary_key=True, index=True)
+    word = Column(String)
+    is_correct = Column(Boolean)
+    sentence_id = Column(Integer, ForeignKey("sentences.id"))
+    sentence = relationship("Sentence", back_populates="word_options")
+
 class Sentence(Base):
     __tablename__ = "sentences"
 
     id = Column(Integer, primary_key=True, index=True)
     sentence = Column(String, index=True)
-    correct_answer = Column(String)
-    verb_form = Column(String)  # e.g., "present", "past", "future"
     tense = Column(String)      # e.g., "perfective", "imperfective"
     difficulty_level = Column(Integer)
+    word_options = relationship("WordOption", back_populates="sentence", cascade="all, delete-orphan")
 
 Base.metadata.create_all(bind=engine)
 
+class WordOptionResponse(BaseModel):
+    word: str
+    is_correct: bool
+
 class SentenceCreate(BaseModel):
     sentence: str
-    correct_answer: str
-    verb_form: str
     tense: str
     difficulty_level: int
+    word_options: List[WordOptionResponse]
 
 class SentenceResponse(BaseModel):
     id: int
     sentence: str
-    verb_form: str
     tense: str
     difficulty_level: int
+    word_options: List[WordOptionResponse]
 
 class SentenceVerify(BaseModel):
     sentence_id: int
-    user_answer: str
+    selected_word: str
 
 @app.get("/web")
 async def database_viewer(request: Request):
@@ -88,9 +100,18 @@ async def get_random_sentence():
         if not sentences:
             raise HTTPException(status_code=404, detail="No sentences available")
         
-        import random
         random_sentence = random.choice(sentences)
-        return random_sentence
+        # Randomize the order of word options
+        word_options = random_sentence.word_options
+        random.shuffle(word_options)
+        
+        return {
+            "id": random_sentence.id,
+            "sentence": random_sentence.sentence,
+            "tense": random_sentence.tense,
+            "difficulty_level": random_sentence.difficulty_level,
+            "word_options": word_options
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     finally:
@@ -104,7 +125,14 @@ async def verify_answer(sentence_verify: SentenceVerify):
         if not sentence:
             raise HTTPException(status_code=404, detail="Sentence not found")
         
-        if sentence.correct_answer.lower() == sentence_verify.user_answer.lower():
+        # Find the selected word in the options
+        selected_option = next((opt for opt in sentence.word_options 
+                              if opt.word.lower() == sentence_verify.selected_word.lower()), None)
+        
+        if not selected_option:
+            raise HTTPException(status_code=400, detail="Invalid word selection")
+            
+        if selected_option.is_correct:
             return sentence
         else:
             raise HTTPException(status_code=400, detail="Incorrect answer")
