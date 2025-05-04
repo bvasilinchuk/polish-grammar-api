@@ -48,6 +48,25 @@ class SentenceResponse(BaseModel):
     tense: str
     difficulty_level: int
 
+class SentenceVerify(BaseModel):
+    sentence_id: int
+    user_answer: str
+
+app = FastAPI(
+    title="Polish Grammar API",
+    description="API for Polish grammar learning",
+    version="1.0.0"
+)
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, replace with your specific frontend origin
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/api/health")
 async def health_check():
     return {"status": "healthy"}
@@ -71,7 +90,7 @@ async def get_random_sentence():
         db.close()
 
 @app.post("/api/sentences/verify")
-async def verify_answer(sentence_id: int, user_answer: str):
+async def verify_answer(sentence_verify: SentenceVerify):
     db = SessionLocal()
     try:
         sentence = db.query(Sentence).filter(Sentence.id == sentence_id).first()
