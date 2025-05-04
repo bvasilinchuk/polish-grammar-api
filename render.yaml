@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: polish-grammar-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromService: polish-grammar-db
+    healthCheckPath: /api/health
+
+  - type: database
+    name: polish-grammar-db
+    database: postgresql
+    provider: render
+    size: 100MB
