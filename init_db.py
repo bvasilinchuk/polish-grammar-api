@@ -109,10 +109,10 @@ sample_sentences = [
         "tense": "present",
         "difficulty_level": 2,
         "options": [
-            {"unique_id": str(uuid.uuid4()), "word": "pieczą", "is_correct": True},
-            {"unique_id": str(uuid.uuid4()), "word": "piecze", "is_correct": False},
-            {"unique_id": str(uuid.uuid4()), "word": "pieczemy", "is_correct": False},
-            {"unique_id": str(uuid.uuid4()), "word": "piecą", "is_correct": False}
+            {"word": "pieczą", "is_correct": True},
+            {"word": "piecze", "is_correct": False},
+            {"word": "pieczemy", "is_correct": False},
+            {"word": "piecą", "is_correct": False}
         ]
     },
     {
@@ -144,6 +144,7 @@ for sentence_data in sample_sentences:
     # Add word options
     for option_data in sentence_data["options"]:
         option = WordOption(
+            unique_id=str(uuid.uuid4()),
             word=option_data["word"],
             is_correct=option_data["is_correct"],
             sentence_id=sentence.id

@@ -4,9 +4,6 @@ from typing import List
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from pydantic import BaseModel
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
-import os
 import random
 
 app = FastAPI(
@@ -24,10 +21,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Set up templates
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
-
 # Database configuration
 SQLALCHEMY_DATABASE_URL = "sqlite:///polish_grammar.db"
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
@@ -38,6 +31,7 @@ class WordOption(Base):
     __tablename__ = "word_options"
 
     id = Column(Integer, primary_key=True, index=True)
+    unique_id = Column(String, default=lambda: str(uuid.uuid4()), unique=True, nullable=False)
     word = Column(String)
     is_correct = Column(Boolean)
     sentence_id = Column(Integer, ForeignKey("sentences.id"))
@@ -55,6 +49,7 @@ class Sentence(Base):
 Base.metadata.create_all(bind=engine)
 
 class WordOptionResponse(BaseModel):
+    unique_id: str
     word: str
     is_correct: bool
 
@@ -63,7 +58,6 @@ class SentenceCreate(BaseModel):
     tense: str
     difficulty_level: int
     word_options: List[WordOptionResponse]
-
 class SentenceResponse(BaseModel):
     id: int
     sentence: str
@@ -71,9 +65,7 @@ class SentenceResponse(BaseModel):
     difficulty_level: int
     word_options: List[WordOptionResponse]
 
-class SentenceVerify(BaseModel):
-    sentence_id: int
-    selected_word: str
+
 
 @app.get("/web")
 async def database_viewer(request: Request):
@@ -105,37 +97,22 @@ async def get_random_sentence():
         word_options = random_sentence.word_options
         random.shuffle(word_options)
         
-        return {
-            "id": random_sentence.id,
-            "sentence": random_sentence.sentence,
-            "tense": random_sentence.tense,
-            "difficulty_level": random_sentence.difficulty_level,
-            "word_options": word_options
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        db.close()
-
-@app.post("/api/sentences/verify", response_model=SentenceResponse)
-async def verify_answer(sentence_verify: SentenceVerify):
-    db = SessionLocal()
-    try:
-        sentence = db.query(Sentence).filter(Sentence.id == sentence_verify.sentence_id).first()
-        if not sentence:
-            raise HTTPException(status_code=404, detail="Sentence not found")
+        # Convert SQLAlchemy objects to Pydantic models
+        word_option_responses = [
+            WordOptionResponse(
+                unique_id=opt.unique_id,
+                word=opt.word,
+                is_correct=opt.is_correct
+            ) for opt in word_options
+        ]
         
-        # Find the selected word in the options
-        selected_option = next((opt for opt in sentence.word_options 
-                              if opt.word.lower() == sentence_verify.selected_word.lower()), None)
-        
-        if not selected_option:
-            raise HTTPException(status_code=400, detail="Invalid word selection")
-            
-        if selected_option.is_correct:
-            return sentence
-        else:
-            raise HTTPException(status_code=400, detail="Incorrect answer")
+        return SentenceResponse(
+            id=random_sentence.id,
+            sentence=random_sentence.sentence,
+            tense=random_sentence.tense,
+            difficulty_level=random_sentence.difficulty_level,
+            word_options=word_option_responses
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     finally:
