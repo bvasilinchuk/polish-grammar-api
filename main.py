@@ -63,6 +63,18 @@ class SentenceVerify(BaseModel):
     sentence_id: int
     user_answer: str
 
+@app.get("/web")
+async def database_viewer(request: Request):
+    db = SessionLocal()
+    try:
+        sentences = db.query(Sentence).all()
+        return templates.TemplateResponse("index.html", {
+            "request": request,
+            "sentences": sentences
+        })
+    finally:
+        db.close()
+
 @app.get("/api/health")
 async def health_check():
     return {"status": "healthy"}
