@@ -52,21 +52,6 @@ class SentenceVerify(BaseModel):
     sentence_id: int
     user_answer: str
 
-app = FastAPI(
-    title="Polish Grammar API",
-    description="API for Polish grammar learning",
-    version="1.0.0"
-)
-
-# Configure CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with your specific frontend origin
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 @app.get("/api/health")
 async def health_check():
     return {"status": "healthy"}
@@ -75,30 +60,33 @@ async def health_check():
 async def get_random_sentence():
     db = SessionLocal()
     try:
-        logger.info("Attempting to fetch random sentence")
-        # Get a random sentence
-        sentence = db.query(Sentence).first()  # Using first() instead of order_by(func.random())
-        if not sentence:
-            logger.error("No sentences found in database")
+        # Get all sentences and select a random one
+        sentences = db.query(Sentence).all()
+        if not sentences:
             raise HTTPException(status_code=404, detail="No sentences available")
-        logger.info(f"Found sentence: {sentence.sentence}")
-        return sentence
+        
+        import random
+        random_sentence = random.choice(sentences)
+        return random_sentence
     except Exception as e:
-        logger.error(f"Error fetching sentence: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         db.close()
 
-@app.post("/api/sentences/verify")
+@app.post("/api/sentences/verify", response_model=SentenceResponse)
 async def verify_answer(sentence_verify: SentenceVerify):
     db = SessionLocal()
     try:
-        sentence = db.query(Sentence).filter(Sentence.id == sentence_id).first()
+        sentence = db.query(Sentence).filter(Sentence.id == sentence_verify.sentence_id).first()
         if not sentence:
             raise HTTPException(status_code=404, detail="Sentence not found")
         
-        is_correct = sentence.correct_answer.lower() == user_answer.lower()
-        return {"is_correct": is_correct}
+        if sentence.correct_answer.lower() == sentence_verify.user_answer.lower():
+            return sentence
+        else:
+            raise HTTPException(status_code=400, detail="Incorrect answer")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
     finally:
         db.close()
 
