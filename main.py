@@ -1,11 +1,18 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from sqlalchemy import create_engine, Column, Integer, String, func
 from sqlalchemy.orm import sessionmaker, declarative_base
 from pydantic import BaseModel
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+import os
 
-app = FastAPI(title="Polish Grammar Learning API")
+app = FastAPI(
+    title="Polish Grammar API",
+    description="API for Polish grammar learning",
+    version="1.0.0"
+)
 
 # Configure CORS
 app.add_middleware(
@@ -15,6 +22,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Set up templates
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 # Database configuration
 SQLALCHEMY_DATABASE_URL = "sqlite:///polish_grammar.db"

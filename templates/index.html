@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polish Grammar Database</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sentence-card {
+            margin-bottom: 1rem;
+        }
+        .verb-form {
+            color: #007bff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Polish Grammar Database</h1>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Sentences</h5>
+                        <div id="sentences-list" class="mt-3">
+                            {% for sentence in sentences %}
+                            <div class="sentence-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-subtitle mb-2 text-muted">ID: {{ sentence.id }}</h6>
+                                        <p class="card-text">
+                                            <span class="verb-form">{{ sentence.sentence }}</span>
+                                            <br>
+                                            <small>Verb form: {{ sentence.verb_form }}</small>
+                                            <br>
+                                            <small>Tense: {{ sentence.tense }}</small>
+                                            <br>
+                                            <small>Difficulty: {{ sentence.difficulty_level }}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
