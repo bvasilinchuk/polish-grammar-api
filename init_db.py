@@ -17,113 +17,113 @@ db = SessionLocal()
 # Add more diverse Polish sentences with multiple choice options
 sample_sentences = [
     {
-        "sentence": "On ___________ (jeść) obiad.",
+        "sentence": "Jeremi ___ do sklepu.",
         "tense": "present",
         "difficulty_level": 1,
         "options": [
-            {"word": "je", "is_correct": True},
-            {"word": "jedzie", "is_correct": False},
-            {"word": "jedł", "is_correct": False},
-            {"word": "jedziemy", "is_correct": False}
+            {"word": "zjadł", "is_correct": False},
+            {"word": "odpowiedział", "is_correct": True},
+            {"word": "widział", "is_correct": False},
+            {"word": "przyszedł", "is_correct": False}
         ]
     },
     {
-        "sentence": "Wczoraj oni ___________ (iść) do szkoły.",
-        "tense": "past",
-        "difficulty_level": 2,
-        "options": [
-            {"word": "szli", "is_correct": True},
-            {"word": "szedł", "is_correct": False},
-            {"word": "idą", "is_correct": False},
-            {"word": "idziemy", "is_correct": False}
-        ]
-    },
-    {
-        "sentence": "Ona ___________ (być) w domu.",
+        "sentence": "Jędrzej ___ do sklepu.",
         "tense": "present",
         "difficulty_level": 1,
         "options": [
-            {"word": "jest", "is_correct": True},
-            {"word": "była", "is_correct": False},
-            {"word": "są", "is_correct": False},
-            {"word": "był", "is_correct": False}
+            {"word": "zrobił", "is_correct": True},
+            {"word": "przyszedł", "is_correct": False},
+            {"word": "obejrzał", "is_correct": False},
+            {"word": "poszedł", "is_correct": False}
         ]
     },
     {
-        "sentence": "Oni ___________ (móc) pomóc.",
-        "tense": "present",
-        "difficulty_level": 2,
-        "options": [
-            {"word": "mogą", "is_correct": True},
-            {"word": "mogę", "is_correct": False},
-            {"word": "mogli", "is_correct": False},
-            {"word": "mogę", "is_correct": False}
-        ]
-    },
-    {
-        "sentence": "On ___________ (piec) ciasto.",
-        "tense": "present",
-        "difficulty_level": 2,
-        "options": [
-            {"word": "piecze", "is_correct": True},
-            {"word": "piecze", "is_correct": False},
-            {"word": "piecą", "is_correct": False},
-            {"word": "pieczemy", "is_correct": False}
-        ]
-    },
-    {
-        "sentence": "My ___________ (czytać) książkę.",
-        "tense": "present",
-        "difficulty_level": 2,
-        "options": [
-            {"word": "czytamy", "is_correct": True},
-            {"word": "czyta", "is_correct": False},
-            {"word": "czytają", "is_correct": False},
-            {"word": "czytał", "is_correct": False}
-        ]
-    },
-    {
-        "sentence": "Ona ___________ (płakać) wczoraj.",
-        "tense": "past",
-        "difficulty_level": 2,
-        "options": [
-            {"word": "plakała", "is_correct": True},
-            {"word": "płakał", "is_correct": False},
-            {"word": "płacze", "is_correct": False},
-            {"word": "płakały", "is_correct": False}
-        ]
-    },
-    {
-        "sentence": "Oni ___________ (być) zadowoleni.",
+        "sentence": "Leon ___ do sklepu.",
         "tense": "present",
         "difficulty_level": 1,
         "options": [
-            {"word": "są", "is_correct": True},
-            {"word": "jest", "is_correct": False},
-            {"word": "byli", "is_correct": False},
-            {"word": "były", "is_correct": False}
+            {"word": "powiedział", "is_correct": True},
+            {"word": "zrozumiał", "is_correct": False},
+            {"word": "przyszedł", "is_correct": False},
+            {"word": "obejrzał", "is_correct": False}
         ]
     },
     {
-        "sentence": "Oni ___________ (piec) ciasto.",
+        "sentence": "Maks ___ do sklepu.",
         "tense": "present",
-        "difficulty_level": 2,
+        "difficulty_level": 1,
         "options": [
-            {"word": "pieczą", "is_correct": True},
-            {"word": "piecze", "is_correct": False},
-            {"word": "pieczemy", "is_correct": False},
-            {"word": "piecą", "is_correct": False}
+            {"word": "dostał", "is_correct": False},
+            {"word": "widział", "is_correct": True},
+            {"word": "czytał", "is_correct": False},
+            {"word": "napisał", "is_correct": False}
         ]
     },
     {
-        "sentence": "Ona ___________ (piec) ciasto.",
+        "sentence": "Hubert ___ do sklepu.",
         "tense": "present",
-        "difficulty_level": 2,
+        "difficulty_level": 1,
         "options": [
-            {"word": "piecze", "is_correct": True},
-            {"word": "pieczą", "is_correct": False},
-            {"word": "pieczemy", "is_correct": False},
-            {"word": "piecą", "is_correct": False}
+            {"word": "kupił", "is_correct": False},
+            {"word": "obejrzał", "is_correct": False},
+            {"word": "poszedł", "is_correct": False},
+            {"word": "czytał", "is_correct": True}
+        ]
+    },
+    {
+        "sentence": "Stefan ___ do sklepu.",
+        "tense": "present",
+        "difficulty_level": 1,
+        "options": [
+            {"word": "powiedział", "is_correct": False},
+            {"word": "obejrzał", "is_correct": False},
+            {"word": "wypił", "is_correct": False},
+            {"word": "przyszedł", "is_correct": True}
+        ]
+    },
+    {
+        "sentence": "Marcin ___ do sklepu.",
+        "tense": "present",
+        "difficulty_level": 1,
+        "options": [
+            {"word": "napisał", "is_correct": False},
+            {"word": "obejrzał", "is_correct": True},
+            {"word": "poszedł", "is_correct": False},
+            {"word": "zjadł", "is_correct": False}
+        ]
+    },
+    {
+        "sentence": "Ryszard ___ do sklepu.",
+        "tense": "present",
+        "difficulty_level": 1,
+        "options": [
+            {"word": "powiedział", "is_correct": False},
+            {"word": "czytał", "is_correct": True},
+            {"word": "incorrect", "is_correct": False},
+            {"word": "dostał", "is_correct": False}
+        ]
+    },
+    {
+        "sentence": "Dariusz ___ do sklepu.",
+        "tense": "present",
+        "difficulty_level": 1,
+        "options": [
+            {"word": "zjadł", "is_correct": True},
+            {"word": "odpowiedział", "is_correct": False},
+            {"word": "zrozumiał", "is_correct": False},
+            {"word": "obejrzał", "is_correct": False}
+        ]
+    },
+    {
+        "sentence": "Oskar ___ do sklepu.",
+        "tense": "present",
+        "difficulty_level": 1,
+        "options": [
+            {"word": "poszedł", "is_correct": False},
+            {"word": "zjadł", "is_correct": True},
+            {"word": "sprzedał", "is_correct": False},
+            {"word": "zrobił", "is_correct": False}
         ]
     }
 ]
