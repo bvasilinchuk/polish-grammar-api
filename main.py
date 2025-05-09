@@ -359,6 +359,7 @@ def get_next_sentence(theme_id: int, current_user: User = Depends(get_current_us
 
 @app.post("/api/progress")
 def update_progress(request: dict = Body(...), current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Update user progress after completing a sentence."""
     # Extract parameters from request body
     theme_id = request.get("theme_id")
     sentence_id = request.get("sentence_id")
@@ -372,7 +373,6 @@ def update_progress(request: dict = Body(...), current_user: User = Depends(get_
         sentence_id = int(sentence_id)
     except (ValueError, TypeError):
         raise HTTPException(status_code=422, detail="theme_id and sentence_id must be integers")
-    """Update user progress after completing a sentence."""
     try:
         print(f"[DEBUG] Updating progress for user {current_user.id} ({current_user.email}), theme {theme_id}, sentence {sentence_id}")
         
