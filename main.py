@@ -181,9 +181,9 @@ def register(user: UserCreate):
 
 # --- User Login Endpoint ---
 @app.post("/api/login", response_model=Token)
-def login(form_data: OAuth2PasswordRequestForm = Depends()):
+def login(user: UserLogin):
     db = SessionLocal()
-    user = authenticate_user(db, form_data.username, form_data.password)
+    user = authenticate_user(db, user.email, user.password)
     db.close()
     if not user:
         raise HTTPException(status_code=401, detail="Incorrect email or password")
