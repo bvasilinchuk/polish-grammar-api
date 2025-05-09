@@ -40,4 +40,8 @@ ENV/
 
 # Database
 polish_grammar.db
+database.db
 *.dbsqlite3
+
+# Test scripts
+test_*.py

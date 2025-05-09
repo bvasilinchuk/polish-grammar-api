@@ -1,0 +1,259 @@
+[
+  {
+    "theme": "Cases",
+    "subtheme": "Nominative",
+    "sentences": [
+      {"sentence": "___ jest wybitnym naukowcem.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "On", "is_correct": true}, {"word": "Ona", "is_correct": false}, {"word": "Oni", "is_correct": false}, {"word": "My", "is_correct": false}]},
+      {"sentence": "___ to znani artyści.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Oni", "is_correct": true}, {"word": "One", "is_correct": false}, {"word": "On", "is_correct": false}, {"word": "Wy", "is_correct": false}]},
+      {"sentence": "___ jest odpowiedzialna za projekt.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Ona", "is_correct": true}, {"word": "On", "is_correct": false}, {"word": "Oni", "is_correct": false}, {"word": "My", "is_correct": false}]},
+      {"sentence": "___ są najlepszymi studentami na roku.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Oni", "is_correct": true}, {"word": "One", "is_correct": false}, {"word": "My", "is_correct": false}, {"word": "Wy", "is_correct": false}]},
+      {"sentence": "___ jest lekarzem z wieloletnim doświadczeniem.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "On", "is_correct": true}, {"word": "Ona", "is_correct": false}, {"word": "Oni", "is_correct": false}, {"word": "Wy", "is_correct": false}]},
+      {"sentence": "___ to nowy dyrektor szkoły.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "On", "is_correct": true}, {"word": "Ona", "is_correct": false}, {"word": "Oni", "is_correct": false}, {"word": "My", "is_correct": false}]},
+      {"sentence": "___ jest znana w całym mieście.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Ona", "is_correct": true}, {"word": "On", "is_correct": false}, {"word": "Oni", "is_correct": false}, {"word": "Wy", "is_correct": false}]},
+      {"sentence": "___ są gotowi do wyjazdu.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Oni", "is_correct": true}, {"word": "One", "is_correct": false}, {"word": "My", "is_correct": false}, {"word": "Wy", "is_correct": false}]},
+      {"sentence": "___ jest specjalistą w tej dziedzinie.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "On", "is_correct": true}, {"word": "Ona", "is_correct": false}, {"word": "Oni", "is_correct": false}, {"word": "Wy", "is_correct": false}]},
+      {"sentence": "___ jest bardzo ambitna.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Ona", "is_correct": true}, {"word": "On", "is_correct": false}, {"word": "Oni", "is_correct": false}, {"word": "My", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Cases",
+    "subtheme": "Genitive",
+    "sentences": [
+      {"sentence": "Nie mam ___ kluczy.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "tych", "is_correct": true}, {"word": "te", "is_correct": false}, {"word": "tym", "is_correct": false}, {"word": "tę", "is_correct": false}]},
+      {"sentence": "Potrzebuję ___ pomocy.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "twojej", "is_correct": true}, {"word": "twoja", "is_correct": false}, {"word": "twojemu", "is_correct": false}, {"word": "twoją", "is_correct": false}]},
+      {"sentence": "Nie widzę ___ samochodu.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "tego", "is_correct": true}, {"word": "ten", "is_correct": false}, {"word": "tym", "is_correct": false}, {"word": "tą", "is_correct": false}]},
+      {"sentence": "Brakuje mi ___ cukru do ciasta.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "trochę", "is_correct": true}, {"word": "trochęm", "is_correct": false}, {"word": "trochęmi", "is_correct": false}, {"word": "trochęmu", "is_correct": false}]},
+      {"sentence": "Nie mam ___ czasu na rozmowę.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "wiele", "is_correct": true}, {"word": "wielu", "is_correct": false}, {"word": "wielką", "is_correct": false}, {"word": "wielki", "is_correct": false}]},
+      {"sentence": "Nie było ___ ludzi na spotkaniu.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "wielu", "is_correct": true}, {"word": "wiele", "is_correct": false}, {"word": "wielką", "is_correct": false}, {"word": "wielki", "is_correct": false}]},
+      {"sentence": "Nie pamiętam ___ nazwiska.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "jego", "is_correct": true}, {"word": "jemu", "is_correct": false}, {"word": "jegoż", "is_correct": false}, {"word": "jegoł", "is_correct": false}]},
+      {"sentence": "Brakuje ___ soli w zupie.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "trochę", "is_correct": true}, {"word": "trochęm", "is_correct": false}, {"word": "trochęmu", "is_correct": false}, {"word": "trochęmi", "is_correct": false}]},
+      {"sentence": "Nie mam ___ pieniędzy na bilet.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "wystarczająco", "is_correct": true}, {"word": "wystarczający", "is_correct": false}, {"word": "wystarczającą", "is_correct": false}, {"word": "wystarczająca", "is_correct": false}]},
+      {"sentence": "Nie znam ___ osoby.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "tej", "is_correct": true}, {"word": "ta", "is_correct": false}, {"word": "tą", "is_correct": false}, {"word": "tym", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Cases",
+    "subtheme": "Dative",
+    "sentences": [
+      {"sentence": "Dziękuję ___ za pomoc.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "tobie", "is_correct": true}, {"word": "ciebie", "is_correct": false}, {"word": "tobą", "is_correct": false}, {"word": "tobiego", "is_correct": false}]},
+      {"sentence": "Podarowałem książkę ___.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "bratu", "is_correct": true}, {"word": "brata", "is_correct": false}, {"word": "bratem", "is_correct": false}, {"word": "bracie", "is_correct": false}]},
+      {"sentence": "Pomagam ___ w nauce.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "koleżance", "is_correct": true}, {"word": "koleżankę", "is_correct": false}, {"word": "koleżanką", "is_correct": false}, {"word": "koleżanki", "is_correct": false}]},
+      {"sentence": "Zadzwoniłem ___ z gratulacjami.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "mamie", "is_correct": true}, {"word": "mamą", "is_correct": false}, {"word": "mamę", "is_correct": false}, {"word": "mamy", "is_correct": false}]},
+      {"sentence": "Przyglądam się ___ z ciekawością.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "dziecku", "is_correct": true}, {"word": "dziecka", "is_correct": false}, {"word": "dzieckiem", "is_correct": false}, {"word": "dzieci", "is_correct": false}]},
+      {"sentence": "Opowiadam ___ o podróży.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "przyjacielowi", "is_correct": true}, {"word": "przyjaciela", "is_correct": false}, {"word": "przyjacielem", "is_correct": false}, {"word": "przyjaciela", "is_correct": false}]},
+      {"sentence": "Złożyłem życzenia ___.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "siostrze", "is_correct": true}, {"word": "siostrę", "is_correct": false}, {"word": "siostrą", "is_correct": false}, {"word": "siostry", "is_correct": false}]},
+      {"sentence": "Wysłałem list ___.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "dziadkowi", "is_correct": true}, {"word": "dziadka", "is_correct": false}, {"word": "dziadkiem", "is_correct": false}, {"word": "dziadków", "is_correct": false}]},
+      {"sentence": "Pomagam ___ w ogrodzie.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "sąsiadowi", "is_correct": true}, {"word": "sąsiada", "is_correct": false}, {"word": "sąsiadem", "is_correct": false}, {"word": "sąsiadów", "is_correct": false}]},
+      {"sentence": "Opowiadam historię ___.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "dzieciom", "is_correct": true}, {"word": "dzieci", "is_correct": false}, {"word": "dzieciami", "is_correct": false}, {"word": "dziecku", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Cases",
+    "subtheme": "Accusative",
+    "sentences": [
+      {"sentence": "Widzę ___ na ulicy.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "samochód", "is_correct": true}, {"word": "samochodem", "is_correct": false}, {"word": "samochodu", "is_correct": false}, {"word": "samochodzie", "is_correct": false}]},
+      {"sentence": "Kupuję ___ w sklepie.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "chleb", "is_correct": true}, {"word": "chleba", "is_correct": false}, {"word": "chlebem", "is_correct": false}, {"word": "chlebie", "is_correct": false}]},
+      {"sentence": "Piszę ___ do przyjaciela.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "list", "is_correct": true}, {"word": "listem", "is_correct": false}, {"word": "listu", "is_correct": false}, {"word": "liście", "is_correct": false}]},
+      {"sentence": "Znam ___ od lat.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "tego człowieka", "is_correct": true}, {"word": "tym człowiekiem", "is_correct": false}, {"word": "tego człowieka", "is_correct": false}, {"word": "tym człowieku", "is_correct": false}]},
+      {"sentence": "Spotkałem ___ wczoraj na dworcu.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "przyjaciela", "is_correct": true}, {"word": "przyjacielowi", "is_correct": false}, {"word": "przyjacielem", "is_correct": false}, {"word": "przyjacielu", "is_correct": false}]},
+      {"sentence": "Czekam na ___ od rana.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "autobus", "is_correct": true}, {"word": "autobusem", "is_correct": false}, {"word": "autobusu", "is_correct": false}, {"word": "autobusie", "is_correct": false}]},
+      {"sentence": "Oglądam ___ w kinie.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "film", "is_correct": true}, {"word": "filmem", "is_correct": false}, {"word": "filmu", "is_correct": false}, {"word": "filmie", "is_correct": false}]},
+      {"sentence": "Lubię ___ na śniadanie.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "jajka", "is_correct": true}, {"word": "jajkami", "is_correct": false}, {"word": "jajek", "is_correct": false}, {"word": "jajku", "is_correct": false}]},
+      {"sentence": "Czytasz ___ codziennie?", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "gazetę", "is_correct": true}, {"word": "gazeta", "is_correct": false}, {"word": "gazetą", "is_correct": false}, {"word": "gazecie", "is_correct": false}]},
+      {"sentence": "Mam ___ do zrobienia.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "zadanie", "is_correct": true}, {"word": "zadaniem", "is_correct": false}, {"word": "zadania", "is_correct": false}, {"word": "zadaniu", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Cases",
+    "subtheme": "Instrumental",
+    "sentences": [
+      {"sentence": "Piszę ___ piórem.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "niebieskim", "is_correct": true}, {"word": "niebieskie", "is_correct": false}, {"word": "niebieska", "is_correct": false}, {"word": "niebieską", "is_correct": false}]},
+      {"sentence": "Jestem zachwycony ___ występem.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "jego", "is_correct": true}, {"word": "jegoż", "is_correct": false}, {"word": "jegoł", "is_correct": false}, {"word": "jemu", "is_correct": false}]},
+      {"sentence": "Rozmawiam z ___ przez telefon.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "przyjacielem", "is_correct": true}, {"word": "przyjaciela", "is_correct": false}, {"word": "przyjacielowi", "is_correct": false}, {"word": "przyjacielu", "is_correct": false}]},
+      {"sentence": "Idę do pracy ___ autobusem.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "autobusem", "is_correct": true}, {"word": "autobus", "is_correct": false}, {"word": "autobusu", "is_correct": false}, {"word": "autobusie", "is_correct": false}]},
+      {"sentence": "Piszę ___ długopisem.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "czerwonym", "is_correct": true}, {"word": "czerwone", "is_correct": false}, {"word": "czerwoną", "is_correct": false}, {"word": "czerwonej", "is_correct": false}]},
+      {"sentence": "Zajmuję się ___ od lat.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "muzyką", "is_correct": true}, {"word": "muzyka", "is_correct": false}, {"word": "muzykę", "is_correct": false}, {"word": "muzyce", "is_correct": false}]},
+      {"sentence": "Spaceruję ___ parkiem.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "zielonym", "is_correct": true}, {"word": "zielone", "is_correct": false}, {"word": "zieloną", "is_correct": false}, {"word": "zielonej", "is_correct": false}]},
+      {"sentence": "Jestem zafascynowany ___ kulturą.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "japońską", "is_correct": true}, {"word": "japońska", "is_correct": false}, {"word": "japońskie", "is_correct": false}, {"word": "japońskim", "is_correct": false}]},
+      {"sentence": "Rozmawiam z ___ nauczycielem.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "nowym", "is_correct": true}, {"word": "nowa", "is_correct": false}, {"word": "nową", "is_correct": false}, {"word": "nowe", "is_correct": false}]},
+      {"sentence": "Idę na spacer ___ psem.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "moim", "is_correct": true}, {"word": "moją", "is_correct": false}, {"word": "moje", "is_correct": false}, {"word": "moją", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Cases",
+    "subtheme": "Locative",
+    "sentences": [
+      {"sentence": "Mieszkam ___ Warszawie.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "w", "is_correct": true}, {"word": "na", "is_correct": false}, {"word": "do", "is_correct": false}, {"word": "od", "is_correct": false}]},
+      {"sentence": "Rozmawiamy ___ spotkaniu.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "o", "is_correct": true}, {"word": "na", "is_correct": false}, {"word": "w", "is_correct": false}, {"word": "do", "is_correct": false}]},
+      {"sentence": "Myślę ___ przyszłości.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "o", "is_correct": true}, {"word": "na", "is_correct": false}, {"word": "w", "is_correct": false}, {"word": "do", "is_correct": false}]},
+      {"sentence": "Opowiadam o ___ wydarzeniu.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "tym", "is_correct": true}, {"word": "ten", "is_correct": false}, {"word": "tego", "is_correct": false}, {"word": "tą", "is_correct": false}]},
+      {"sentence": "Czytałem o ___ książce.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "tej", "is_correct": true}, {"word": "ta", "is_correct": false}, {"word": "tą", "is_correct": false}, {"word": "tym", "is_correct": false}]},
+      {"sentence": "Rozmawialiśmy o ___ problemie.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "tym", "is_correct": true}, {"word": "ten", "is_correct": false}, {"word": "tego", "is_correct": false}, {"word": "tą", "is_correct": false}]},
+      {"sentence": "Byłem na ___ koncertu.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "początku", "is_correct": true}, {"word": "początek", "is_correct": false}, {"word": "początkiem", "is_correct": false}, {"word": "początku", "is_correct": false}]},
+      {"sentence": "Mieszkam ___ nowym mieszkaniu.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "w", "is_correct": true}, {"word": "na", "is_correct": false}, {"word": "do", "is_correct": false}, {"word": "od", "is_correct": false}]},
+      {"sentence": "Zastanawiam się nad ___ decyzją.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "tą", "is_correct": true}, {"word": "ta", "is_correct": false}, {"word": "tym", "is_correct": false}, {"word": "tej", "is_correct": false}]},
+      {"sentence": "Rozmawiamy o ___ wydarzeniach.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "tych", "is_correct": true}, {"word": "te", "is_correct": false}, {"word": "tym", "is_correct": false}, {"word": "tą", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Verb Conjugation",
+    "subtheme": "Present",
+    "sentences": [
+      {"sentence": "Codziennie ___ do pracy pieszo.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "chodzę", "is_correct": true}, {"word": "chodziłem", "is_correct": false}, {"word": "pójdę", "is_correct": false}, {"word": "poszedłem", "is_correct": false}]},
+      {"sentence": "Oni często ___ w weekendy.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "gotują", "is_correct": true}, {"word": "gotowali", "is_correct": false}, {"word": "ugotują", "is_correct": false}, {"word": "gotował", "is_correct": false}]},
+      {"sentence": "Czy ___ na koncert dziś wieczorem?", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "idziesz", "is_correct": true}, {"word": "poszedłeś", "is_correct": false}, {"word": "pójdziesz", "is_correct": false}, {"word": "szedłeś", "is_correct": false}]},
+      {"sentence": "___ się języka polskiego od roku.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "uczę", "is_correct": true}, {"word": "uczyłem", "is_correct": false}, {"word": "nauczyłem", "is_correct": false}, {"word": "uczyłbym", "is_correct": false}]},
+      {"sentence": "Zawsze ___ herbatę rano.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "piję", "is_correct": true}, {"word": "piłem", "is_correct": false}, {"word": "wypiję", "is_correct": false}, {"word": "piłbym", "is_correct": false}]},
+      {"sentence": "Ona ___ w dużej firmie.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "pracuje", "is_correct": true}, {"word": "pracowała", "is_correct": false}, {"word": "popracuje", "is_correct": false}, {"word": "pracowałaby", "is_correct": false}]},
+      {"sentence": "My ___ się na spotkanie.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "spieszymy", "is_correct": true}, {"word": "spieszyliśmy", "is_correct": false}, {"word": "pospieszymy", "is_correct": false}, {"word": "spieszyli", "is_correct": false}]},
+      {"sentence": "Dzieci ___ w ogrodzie każdego dnia.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "bawią się", "is_correct": true}, {"word": "bawiły się", "is_correct": false}, {"word": "pobawią się", "is_correct": false}, {"word": "bawiłyby się", "is_correct": false}]},
+      {"sentence": "___ list do babci co miesiąc.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "piszę", "is_correct": true}, {"word": "napisałem", "is_correct": false}, {"word": "napiszę", "is_correct": false}, {"word": "pisałem", "is_correct": false}]},
+      {"sentence": "Zawsze ___ muzyki podczas pracy.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "słucham", "is_correct": true}, {"word": "słuchałem", "is_correct": false}, {"word": "posłucham", "is_correct": false}, {"word": "słuchałbym", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Verb Conjugation",
+    "subtheme": "Past",
+    "sentences": [
+      {"sentence": "Wczoraj ___ do kina z przyjaciółmi.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "poszedłem", "is_correct": true}, {"word": "idę", "is_correct": false}, {"word": "pójdę", "is_correct": false}, {"word": "chodzę", "is_correct": false}]},
+      {"sentence": "Ona ___ pyszny obiad w niedzielę.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "ugotowała", "is_correct": true}, {"word": "gotuje", "is_correct": false}, {"word": "gotowałaby", "is_correct": false}, {"word": "gotowałaś", "is_correct": false}]},
+      {"sentence": "___ się polskiego przez dwa lata.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "uczyłem", "is_correct": true}, {"word": "uczę", "is_correct": false}, {"word": "uczyłbym", "is_correct": false}, {"word": "nauczyłem", "is_correct": false}]},
+      {"sentence": "___ list do kolegi w zeszłym miesiącu.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "napisałem", "is_correct": true}, {"word": "piszę", "is_correct": false}, {"word": "napiszę", "is_correct": false}, {"word": "pisałem", "is_correct": false}]},
+      {"sentence": "W dzieciństwie często ___ w parku.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "bawiłem się", "is_correct": true}, {"word": "bawię się", "is_correct": false}, {"word": "pobawię się", "is_correct": false}, {"word": "bawiłbym się", "is_correct": false}]},
+      {"sentence": "___ w dużej firmie przez pięć lat.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "pracowałem", "is_correct": true}, {"word": "pracuję", "is_correct": false}, {"word": "pracowałbym", "is_correct": false}, {"word": "pracowałeś", "is_correct": false}]},
+      {"sentence": "My ___ się na autobus.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "spieszyliśmy", "is_correct": true}, {"word": "spieszymy", "is_correct": false}, {"word": "pospieszymy", "is_correct": false}, {"word": "spieszyli", "is_correct": false}]},
+      {"sentence": "Dzieci ___ się na śniegu.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "bawiły", "is_correct": true}, {"word": "bawią", "is_correct": false}, {"word": "pobawią", "is_correct": false}, {"word": "bawiłyby", "is_correct": false}]},
+      {"sentence": "___ muzyki podczas nauki.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "słuchałem", "is_correct": true}, {"word": "słucham", "is_correct": false}, {"word": "posłucham", "is_correct": false}, {"word": "słuchałbym", "is_correct": false}]},
+      {"sentence": "Oni ___ wczoraj na spotkanie.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "przyszli", "is_correct": true}, {"word": "przychodzą", "is_correct": false}, {"word": "przyjdą", "is_correct": false}, {"word": "przychodzili", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Verb Conjugation",
+    "subtheme": "Future",
+    "sentences": [
+      {"sentence": "Jutro ___ do kina z rodziną.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "pójdę", "is_correct": true}, {"word": "poszedłem", "is_correct": false}, {"word": "idę", "is_correct": false}, {"word": "chodzę", "is_correct": false}]},
+      {"sentence": "Ona ___ obiad na przyjęcie.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "ugotuje", "is_correct": true}, {"word": "gotuje", "is_correct": false}, {"word": "gotowała", "is_correct": false}, {"word": "gotowałaby", "is_correct": false}]},
+      {"sentence": "___ się polskiego przez następny rok.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "będę uczył", "is_correct": true}, {"word": "uczę", "is_correct": false}, {"word": "uczyłem", "is_correct": false}, {"word": "uczyłbym", "is_correct": false}]},
+      {"sentence": "___ list do kolegi za tydzień.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "napiszę", "is_correct": true}, {"word": "piszę", "is_correct": false}, {"word": "napisałem", "is_correct": false}, {"word": "pisałem", "is_correct": false}]},
+      {"sentence": "W przyszłości często ___ w parku.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "będę się bawił", "is_correct": true}, {"word": "bawiłem się", "is_correct": false}, {"word": "bawię się", "is_correct": false}, {"word": "bawiłbym się", "is_correct": false}]},
+      {"sentence": "___ w dużej firmie przez kilka lat.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "będę pracował", "is_correct": true}, {"word": "pracowałem", "is_correct": false}, {"word": "pracuję", "is_correct": false}, {"word": "pracowałbym", "is_correct": false}]},
+      {"sentence": "My ___ się na autobus.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "będziemy spieszyć", "is_correct": true}, {"word": "spieszyliśmy", "is_correct": false}, {"word": "spieszymy", "is_correct": false}, {"word": "spieszyli", "is_correct": false}]},
+      {"sentence": "Dzieci ___ się na śniegu.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "będą się bawić", "is_correct": true}, {"word": "bawiły", "is_correct": false}, {"word": "bawią", "is_correct": false}, {"word": "bawiłyby", "is_correct": false}]},
+      {"sentence": "___ muzyki podczas nauki.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "będę słuchał", "is_correct": true}, {"word": "słuchałem", "is_correct": false}, {"word": "słucham", "is_correct": false}, {"word": "słuchałbym", "is_correct": false}]},
+      {"sentence": "Oni ___ jutro na spotkanie.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "przyjdą", "is_correct": true}, {"word": "przyszli", "is_correct": false}, {"word": "przychodzą", "is_correct": false}, {"word": "przychodzili", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Aspect of Verbs",
+    "subtheme": "Perfective",
+    "sentences": [
+      {"sentence": "Wczoraj ___ cały projekt.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "zrobiłem", "is_correct": true}, {"word": "robiłem", "is_correct": false}, {"word": "robię", "is_correct": false}, {"word": "zrobiłbym", "is_correct": false}]},
+      {"sentence": "___ list do mamy i wysłałem go.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "napisałem", "is_correct": true}, {"word": "piszę", "is_correct": false}, {"word": "pisałem", "is_correct": false}, {"word": "napisałbym", "is_correct": false}]},
+      {"sentence": "___ obiad zanim przyszli goście.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "ugotowałem", "is_correct": true}, {"word": "gotowałem", "is_correct": false}, {"word": "gotuję", "is_correct": false}, {"word": "gotowałbym", "is_correct": false}]},
+      {"sentence": "___ drzwi i wyszedłem.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "zamknąłem", "is_correct": true}, {"word": "zamykałem", "is_correct": false}, {"word": "zamykam", "is_correct": false}, {"word": "zamknąłbym", "is_correct": false}]},
+      {"sentence": "___ egzamin na prawo jazdy.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "zdałem", "is_correct": true}, {"word": "zdawałem", "is_correct": false}, {"word": "zdaję", "is_correct": false}, {"word": "zdałbym", "is_correct": false}]},
+      {"sentence": "___ książkę w jeden dzień.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "przeczytałem", "is_correct": true}, {"word": "czytałem", "is_correct": false}, {"word": "czytam", "is_correct": false}, {"word": "przeczytałbym", "is_correct": false}]},
+      {"sentence": "___ się na czas na spotkanie.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "pospieszyłem", "is_correct": true}, {"word": "spieszyłem", "is_correct": false}, {"word": "spieszę", "is_correct": false}, {"word": "pospieszyłbym", "is_correct": false}]},
+      {"sentence": "___ drzwi i wszedłem do środka.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "otworzyłem", "is_correct": true}, {"word": "otwierałem", "is_correct": false}, {"word": "otwieram", "is_correct": false}, {"word": "otworzyłbym", "is_correct": false}]},
+      {"sentence": "___ zadanie domowe przed lekcją.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "odrobiłem", "is_correct": true}, {"word": "odrabiałem", "is_correct": false}, {"word": "odrabiam", "is_correct": false}, {"word": "odrobiłbym", "is_correct": false}]},
+      {"sentence": "___ prezent dla mamy.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "kupiłem", "is_correct": true}, {"word": "kupowałem", "is_correct": false}, {"word": "kupuję", "is_correct": false}, {"word": "kupiłbym", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Aspect of Verbs",
+    "subtheme": "Imperfective",
+    "sentences": [
+      {"sentence": "Codziennie ___ na gitarze.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "grałem", "is_correct": true}, {"word": "zagrałem", "is_correct": false}, {"word": "gram", "is_correct": false}, {"word": "zagram", "is_correct": false}]},
+      {"sentence": "Często ___ książki wieczorami.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "czytam", "is_correct": true}, {"word": "przeczytałem", "is_correct": false}, {"word": "czytałem", "is_correct": false}, {"word": "przeczytam", "is_correct": false}]},
+      {"sentence": "W dzieciństwie ___ się na podwórku.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "bawiłem", "is_correct": true}, {"word": "pobawiłem", "is_correct": false}, {"word": "bawię", "is_correct": false}, {"word": "pobawię", "is_correct": false}]},
+      {"sentence": "Zawsze ___ się na autobus.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "spieszę", "is_correct": true}, {"word": "pospieszyłem", "is_correct": false}, {"word": "spieszyłem", "is_correct": false}, {"word": "pospieszę", "is_correct": false}]},
+      {"sentence": "___ się języka polskiego od roku.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "uczę", "is_correct": true}, {"word": "nauczyłem", "is_correct": false}, {"word": "uczyłem", "is_correct": false}, {"word": "nauczyłbym", "is_correct": false}]},
+      {"sentence": "___ list do babci co miesiąc.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "piszę", "is_correct": true}, {"word": "napisałem", "is_correct": false}, {"word": "pisałem", "is_correct": false}, {"word": "napiszę", "is_correct": false}]},
+      {"sentence": "___ muzyki podczas pracy.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "słucham", "is_correct": true}, {"word": "słuchałem", "is_correct": false}, {"word": "posłucham", "is_correct": false}, {"word": "słuchałbym", "is_correct": false}]},
+      {"sentence": "___ się polskiego przez dwa lata.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "uczyłem", "is_correct": true}, {"word": "uczę", "is_correct": false}, {"word": "uczyłbym", "is_correct": false}, {"word": "nauczyłem", "is_correct": false}]},
+      {"sentence": "W dzieciństwie często ___ w parku.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "bawiłem się", "is_correct": true}, {"word": "bawię się", "is_correct": false}, {"word": "pobawię się", "is_correct": false}, {"word": "bawiłbym się", "is_correct": false}]},
+      {"sentence": "___ w dużej firmie przez pięć lat.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "pracowałem", "is_correct": true}, {"word": "pracuję", "is_correct": false}, {"word": "pracowałbym", "is_correct": false}, {"word": "pracowałeś", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Plural Forms and Usage",
+    "subtheme": null,
+    "sentences": [
+      {"sentence": "W sklepie były tylko ___ jabłka.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "zielone", "is_correct": true}, {"word": "zielona", "is_correct": false}, {"word": "zielony", "is_correct": false}, {"word": "zieloną", "is_correct": false}]},
+      {"sentence": "Na stole leżą ___ książki.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "nowe", "is_correct": true}, {"word": "nowa", "is_correct": false}, {"word": "nowy", "is_correct": false}, {"word": "nową", "is_correct": false}]},
+      {"sentence": "W parku bawią się ___ dzieci.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "małe", "is_correct": true}, {"word": "mała", "is_correct": false}, {"word": "mały", "is_correct": false}, {"word": "małą", "is_correct": false}]},
+      {"sentence": "Na półce stoją ___ kubki.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "kolorowe", "is_correct": true}, {"word": "kolorowy", "is_correct": false}, {"word": "kolorowa", "is_correct": false}, {"word": "kolorową", "is_correct": false}]},
+      {"sentence": "Na ulicy jechały ___ samochody.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "szybkie", "is_correct": true}, {"word": "szybka", "is_correct": false}, {"word": "szybki", "is_correct": false}, {"word": "szybką", "is_correct": false}]},
+      {"sentence": "___ domy są bardzo stare.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Te", "is_correct": true}, {"word": "Ta", "is_correct": false}, {"word": "Ten", "is_correct": false}, {"word": "Tą", "is_correct": false}]},
+      {"sentence": "Widziałem ___ ptaki w ogrodzie.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "piękne", "is_correct": true}, {"word": "piękny", "is_correct": false}, {"word": "piękna", "is_correct": false}, {"word": "piękną", "is_correct": false}]},
+      {"sentence": "___ dzieci przyszły na lekcję.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Wszystkie", "is_correct": true}, {"word": "Wszystka", "is_correct": false}, {"word": "Wszystki", "is_correct": false}, {"word": "Wszystką", "is_correct": false}]},
+      {"sentence": "___ kwiaty są żółte.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Te", "is_correct": true}, {"word": "Ta", "is_correct": false}, {"word": "Ten", "is_correct": false}, {"word": "Tą", "is_correct": false}]},
+      {"sentence": "Widzisz ___ psy na podwórku?", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "te", "is_correct": true}, {"word": "ta", "is_correct": false}, {"word": "ten", "is_correct": false}, {"word": "tą", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Pronouns",
+    "subtheme": null,
+    "sentences": [
+      {"sentence": "___ widziałem wczoraj na ulicy.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Ją", "is_correct": true}, {"word": "Jej", "is_correct": false}, {"word": "Jemu", "is_correct": false}, {"word": "Je", "is_correct": false}]},
+      {"sentence": "___ dali mi prezent.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Oni", "is_correct": true}, {"word": "On", "is_correct": false}, {"word": "Ona", "is_correct": false}, {"word": "One", "is_correct": false}]},
+      {"sentence": "___ powiedziałem prawdę.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Jemu", "is_correct": true}, {"word": "Jej", "is_correct": false}, {"word": "Je", "is_correct": false}, {"word": "Ich", "is_correct": false}]},
+      {"sentence": "___ przyszli na czas.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Oni", "is_correct": true}, {"word": "On", "is_correct": false}, {"word": "Ona", "is_correct": false}, {"word": "One", "is_correct": false}]},
+      {"sentence": "___ nie było w domu.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Ich", "is_correct": true}, {"word": "Jej", "is_correct": false}, {"word": "Jemu", "is_correct": false}, {"word": "Je", "is_correct": false}]},
+      {"sentence": "___ lubię najbardziej.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Ciebie", "is_correct": true}, {"word": "Tobie", "is_correct": false}, {"word": "Tobą", "is_correct": false}, {"word": "Tobiego", "is_correct": false}]},
+      {"sentence": "___ nie rozumiem.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Ich", "is_correct": true}, {"word": "Jej", "is_correct": false}, {"word": "Jemu", "is_correct": false}, {"word": "Je", "is_correct": false}]},
+      {"sentence": "___ spotkałem w kawiarni.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Ją", "is_correct": true}, {"word": "Jej", "is_correct": false}, {"word": "Jemu", "is_correct": false}, {"word": "Je", "is_correct": false}]},
+      {"sentence": "___ daliśmy prezent.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Im", "is_correct": true}, {"word": "Imię", "is_correct": false}, {"word": "Ich", "is_correct": false}, {"word": "Jej", "is_correct": false}]},
+      {"sentence": "___ podziękowałem za pomoc.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Jemu", "is_correct": true}, {"word": "Jej", "is_correct": false}, {"word": "Je", "is_correct": false}, {"word": "Ich", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Particles and Prepositions",
+    "subtheme": null,
+    "sentences": [
+      {"sentence": "___ domu jest cicho.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "W", "is_correct": true}, {"word": "Na", "is_correct": false}, {"word": "Do", "is_correct": false}, {"word": "Za", "is_correct": false}]},
+      {"sentence": "Idę ___ szkoły.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "do", "is_correct": true}, {"word": "na", "is_correct": false}, {"word": "w", "is_correct": false}, {"word": "za", "is_correct": false}]},
+      {"sentence": "Siedzę ___ biurku.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "przy", "is_correct": true}, {"word": "na", "is_correct": false}, {"word": "w", "is_correct": false}, {"word": "do", "is_correct": false}]},
+      {"sentence": "Mieszkam ___ Warszawie.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "w", "is_correct": true}, {"word": "na", "is_correct": false}, {"word": "do", "is_correct": false}, {"word": "za", "is_correct": false}]},
+      {"sentence": "Czekam ___ autobus.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "na", "is_correct": true}, {"word": "do", "is_correct": false}, {"word": "w", "is_correct": false}, {"word": "za", "is_correct": false}]},
+      {"sentence": "Stoję ___ oknie.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "przy", "is_correct": true}, {"word": "na", "is_correct": false}, {"word": "w", "is_correct": false}, {"word": "do", "is_correct": false}]},
+      {"sentence": "Rozmawiam ___ kolegą.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "z", "is_correct": true}, {"word": "na", "is_correct": false}, {"word": "w", "is_correct": false}, {"word": "do", "is_correct": false}]},
+      {"sentence": "Jadę ___ pracy.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "do", "is_correct": true}, {"word": "na", "is_correct": false}, {"word": "w", "is_correct": false}, {"word": "za", "is_correct": false}]},
+      {"sentence": "Siedzę ___ ławce w parku.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "na", "is_correct": true}, {"word": "w", "is_correct": false}, {"word": "do", "is_correct": false}, {"word": "za", "is_correct": false}]},
+      {"sentence": "Idę ___ sklepu.", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "do", "is_correct": true}, {"word": "na", "is_correct": false}, {"word": "w", "is_correct": false}, {"word": "za", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Complex Sentences",
+    "subtheme": null,
+    "sentences": [
+      {"sentence": "Chociaż padał deszcz, ___ poszliśmy na spacer.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "mimo to", "is_correct": true}, {"word": "dlatego", "is_correct": false}, {"word": "ponieważ", "is_correct": false}, {"word": "jeśli", "is_correct": false}]},
+      {"sentence": "Nie poszedłem do pracy, ___ byłem chory.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "ponieważ", "is_correct": true}, {"word": "chociaż", "is_correct": false}, {"word": "dlatego", "is_correct": false}, {"word": "jeśli", "is_correct": false}]},
+      {"sentence": "___ nie zadzwoni, nie pójdziemy do kina.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "Jeśli", "is_correct": true}, {"word": "Ponieważ", "is_correct": false}, {"word": "Chociaż", "is_correct": false}, {"word": "Dlatego", "is_correct": false}]},
+      {"sentence": "___ był zmęczony, nie odpoczął.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Chociaż", "is_correct": true}, {"word": "Ponieważ", "is_correct": false}, {"word": "Dlatego", "is_correct": false}, {"word": "Jeśli", "is_correct": false}]},
+      {"sentence": "Nie poszliśmy na basen, ___ padał deszcz.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "bo", "is_correct": true}, {"word": "ponieważ", "is_correct": false}, {"word": "dlatego", "is_correct": false}, {"word": "jeśli", "is_correct": false}]},
+      {"sentence": "___ nie przyjdziesz, nie zaczniemy.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "Jeśli", "is_correct": true}, {"word": "Ponieważ", "is_correct": false}, {"word": "Chociaż", "is_correct": false}, {"word": "Dlatego", "is_correct": false}]},
+      {"sentence": "___ była zmęczona, poszła na spacer.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Chociaż", "is_correct": true}, {"word": "Ponieważ", "is_correct": false}, {"word": "Dlatego", "is_correct": false}, {"word": "Jeśli", "is_correct": false}]},
+      {"sentence": "Nie poszliśmy do kina, ___ padał deszcz.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "bo", "is_correct": true}, {"word": "ponieważ", "is_correct": false}, {"word": "dlatego", "is_correct": false}, {"word": "jeśli", "is_correct": false}]},
+      {"sentence": "___ nie przyjdzie, nie zaczniemy.", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "Jeśli", "is_correct": true}, {"word": "Ponieważ", "is_correct": false}, {"word": "Chociaż", "is_correct": false}, {"word": "Dlatego", "is_correct": false}]},
+      {"sentence": "___ była chora, nie poszła do szkoły.", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Ponieważ", "is_correct": true}, {"word": "Chociaż", "is_correct": false}, {"word": "Dlatego", "is_correct": false}, {"word": "Jeśli", "is_correct": false}]}
+    ]
+  },
+  {
+    "theme": "Question Structures",
+    "subtheme": null,
+    "sentences": [
+      {"sentence": "___ masz na imię?", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Jak", "is_correct": true}, {"word": "Gdzie", "is_correct": false}, {"word": "Kiedy", "is_correct": false}, {"word": "Dlaczego", "is_correct": false}]},
+      {"sentence": "___ jedziesz na wakacje?", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Dokąd", "is_correct": true}, {"word": "Kiedy", "is_correct": false}, {"word": "Jak", "is_correct": false}, {"word": "Dlaczego", "is_correct": false}]},
+      {"sentence": "___ się czujesz?", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Jak", "is_correct": true}, {"word": "Gdzie", "is_correct": false}, {"word": "Kiedy", "is_correct": false}, {"word": "Dlaczego", "is_correct": false}]},
+      {"sentence": "___ przyjedziesz do Polski?", "tense": "future", "difficulty_level": 4, "word_options": [{"word": "Kiedy", "is_correct": true}, {"word": "Gdzie", "is_correct": false}, {"word": "Jak", "is_correct": false}, {"word": "Dlaczego", "is_correct": false}]},
+      {"sentence": "___ mieszkasz?", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Gdzie", "is_correct": true}, {"word": "Jak", "is_correct": false}, {"word": "Kiedy", "is_correct": false}, {"word": "Dlaczego", "is_correct": false}]},
+      {"sentence": "___ to zrobiłeś?", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Dlaczego", "is_correct": true}, {"word": "Jak", "is_correct": false}, {"word": "Kiedy", "is_correct": false}, {"word": "Gdzie", "is_correct": false}]},
+      {"sentence": "___ jest twoja ulubiona książka?", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Jaka", "is_correct": true}, {"word": "Jak", "is_correct": false}, {"word": "Kiedy", "is_correct": false}, {"word": "Gdzie", "is_correct": false}]},
+      {"sentence": "___ byłeś wczoraj?", "tense": "past", "difficulty_level": 4, "word_options": [{"word": "Gdzie", "is_correct": true}, {"word": "Jak", "is_correct": false}, {"word": "Kiedy", "is_correct": false}, {"word": "Dlaczego", "is_correct": false}]},
+      {"sentence": "___ się uczysz polskiego?", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Dlaczego", "is_correct": true}, {"word": "Jak", "is_correct": false}, {"word": "Kiedy", "is_correct": false}, {"word": "Gdzie", "is_correct": false}]},
+      {"sentence": "___ chcesz się nauczyć polskiego?", "tense": "present", "difficulty_level": 4, "word_options": [{"word": "Dlaczego", "is_correct": true}, {"word": "Jak", "is_correct": false}, {"word": "Kiedy", "is_correct": false}, {"word": "Gdzie", "is_correct": false}]}
+    ]
+  }
+]
+
