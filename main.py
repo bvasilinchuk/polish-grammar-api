@@ -152,7 +152,12 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     return user
 
 # --- User Registration Endpoint ---
-@app.post("/api/register", response_model=Token)
+class RegisterResponse(BaseModel):
+    id: int
+    email: EmailStr
+    access_token: str
+
+@app.post("/api/register", response_model=RegisterResponse)
 def register(user: UserCreate):
     db = SessionLocal()
     db_user = get_user_by_email(db, user.email)
@@ -168,7 +173,11 @@ def register(user: UserCreate):
     
     access_token = create_access_token(data={"sub": user.email})
     db.close()
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {
+        "id": new_user.id,
+        "email": new_user.email,
+        "access_token": access_token
+    }
 
 # --- User Login Endpoint ---
 @app.post("/api/login", response_model=Token)
