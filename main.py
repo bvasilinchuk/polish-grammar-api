@@ -388,7 +388,7 @@ def update_progress(request: dict = Body(...), current_user: User = Depends(get_
         if not sentence:
             print(f"[DEBUG] Sentence {sentence_id} not found in theme {theme_id}")
             raise HTTPException(status_code=404, detail="Sentence not found in this theme")
-        print(f"[DEBUG] Found sentence: {sentence.id} - {sentence.polish_text}")
+        print(f"[DEBUG] Found sentence: {sentence.id} - {sentence.sentence}")
         
         # Step 3: Get or create user progress
         progress = db.query(UserProgress).filter_by(user_id=current_user.id, theme_id=theme_id).first()
