@@ -1,10 +1,15 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from typing import List
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from typing import List, Optional
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+from datetime import datetime, timedelta
+from jose import JWTError, jwt
+from passlib.context import CryptContext
 import random
+import uuid
 
 app = FastAPI(
     title="Polish Grammar API",
@@ -27,6 +32,14 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
+# --- User Model for Account Management ---
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
 class WordOption(Base):
     __tablename__ = "word_options"
 
@@ -47,6 +60,145 @@ class Sentence(Base):
     word_options = relationship("WordOption", back_populates="sentence", cascade="all, delete-orphan")
 
 Base.metadata.create_all(bind=engine)
+
+# --- Pydantic Schemas ---
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    email: Optional[str] = None
+
+class UserResponse(BaseModel):
+    id: int
+    email: EmailStr
+    class Config:
+        orm_mode = True
+
+class WordOptionResponse(BaseModel):
+    unique_id: str
+    word: str
+    is_correct: bool
+
+class SentenceCreate(BaseModel):
+    sentence: str
+    tense: str
+    difficulty_level: int
+    word_options: List[WordOptionResponse]
+
+class SentenceResponse(BaseModel):
+    id: int
+    sentence: str
+    tense: str
+    difficulty_level: int
+    word_options: List[WordOptionResponse]
+
+# --- Auth and Security Utilities ---
+SECRET_KEY = "supersecretkey123"  # Change in production
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login")
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+def get_user_by_email(db, email: str):
+    return db.query(User).filter(User.email == email).first()
+
+def authenticate_user(db, email: str, password: str):
+    user = get_user_by_email(db, email)
+    if not user or not verify_password(password, user.hashed_password):
+        return False
+    return user
+
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+        token_data = TokenData(email=email)
+    except JWTError:
+        raise credentials_exception
+    db = SessionLocal()
+    user = get_user_by_email(db, token_data.email)
+    db.close()
+    if user is None:
+        raise credentials_exception
+    return user
+
+# --- User Registration Endpoint ---
+@app.post("/api/register", response_model=UserResponse)
+def register(user: UserCreate):
+    db = SessionLocal()
+    db_user = get_user_by_email(db, user.email)
+    if db_user:
+        db.close()
+        raise HTTPException(status_code=400, detail="Email already registered")
+    hashed_password = get_password_hash(user.password)
+    new_user = User(email=user.email, hashed_password=hashed_password)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    db.close()
+    return new_user
+
+# --- User Login Endpoint ---
+@app.post("/api/login", response_model=Token)
+def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    db = SessionLocal()
+    user = authenticate_user(db, form_data.username, form_data.password)
+    db.close()
+    if not user:
+        raise HTTPException(status_code=401, detail="Incorrect email or password")
+    access_token = create_access_token(data={"sub": user.email})
+    return {"access_token": access_token, "token_type": "bearer"}
+
+# --- Pydantic Schemas for User Management ---
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    email: Optional[str] = None
+
+class UserResponse(BaseModel):
+    id: int
+    email: EmailStr
+    class Config:
+        orm_mode = True
 
 class WordOptionResponse(BaseModel):
     unique_id: str
