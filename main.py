@@ -135,18 +135,37 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
 # --- User Login Endpoint ---
 @app.post("/api/login", response_model=Token)
 def login(login_data: UserLogin, db: Session = Depends(get_db)):
-    # Get the user from the database
-    db_user = get_user_by_email(db, login_data.email)
-    if not db_user:
-        raise HTTPException(status_code=401, detail="User not found")
+    try:
+        print(f"Login attempt for email: {login_data.email}")
         
-    # Verify the password
-    if not verify_password(login_data.password, db_user.hashed_password):
-        raise HTTPException(status_code=401, detail="Incorrect password")
+        # Get the user from the database
+        db_user = get_user_by_email(db, login_data.email)
+        print(f"User found: {db_user is not None}")
         
-    # Create and return the access token
-    access_token = create_access_token(data={"sub": db_user.email})
-    return {"access_token": access_token, "token_type": "bearer"}
+        if not db_user:
+            print("User not found, raising 401")
+            raise HTTPException(status_code=401, detail="User not found")
+        
+        # Verify the password
+        password_valid = verify_password(login_data.password, db_user.hashed_password)
+        print(f"Password valid: {password_valid}")
+        
+        if not password_valid:
+            print("Password invalid, raising 401")
+            raise HTTPException(status_code=401, detail="Incorrect password")
+        
+        # Create and return the access token
+        print("Creating access token")
+        access_token = create_access_token(data={"sub": db_user.email})
+        print("Access token created successfully")
+        
+        return {"access_token": access_token, "token_type": "bearer"}
+    except Exception as e:
+        print(f"Error in login endpoint: {str(e)}")
+        print(f"Exception type: {type(e).__name__}")
+        import traceback
+        print(f"Traceback: {traceback.format_exc()}")
+        raise
 
 # --- Theme Management Endpoints ---
 @app.get("/api/themes", response_model=List[ThemeResponse])
