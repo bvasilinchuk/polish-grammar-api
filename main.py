@@ -181,14 +181,23 @@ def register(user: UserCreate):
 
 # --- User Login Endpoint ---
 @app.post("/api/login", response_model=Token)
-def login(user: UserLogin):
+def login(login_data: UserLogin):
     db = SessionLocal()
-    user = authenticate_user(db, user.email, user.password)
-    db.close()
-    if not user:
-        raise HTTPException(status_code=401, detail="Incorrect email or password")
-    access_token = create_access_token(data={"sub": user.email})
-    return {"access_token": access_token, "token_type": "bearer"}
+    try:
+        # Get the user from the database
+        db_user = get_user_by_email(db, login_data.email)
+        if not db_user:
+            raise HTTPException(status_code=401, detail="User not found")
+            
+        # Verify the password
+        if not verify_password(login_data.password, db_user.hashed_password):
+            raise HTTPException(status_code=401, detail="Incorrect password")
+            
+        # Create and return the access token
+        access_token = create_access_token(data={"sub": db_user.email})
+        return {"access_token": access_token, "token_type": "bearer"}
+    finally:
+        db.close()
 
 # --- Pydantic Schemas for User Management ---
 class UserCreate(BaseModel):
