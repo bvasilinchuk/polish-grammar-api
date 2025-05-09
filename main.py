@@ -1,19 +1,41 @@
-from fastapi import FastAPI, HTTPException, Request, Depends
+from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from typing import List, Optional
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, ForeignKey, DateTime
-from sqlalchemy.orm import sessionmaker, declarative_base, relationship
-from pydantic import BaseModel, EmailStr
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session, joinedload, sessionmaker, declarative_base
 from datetime import datetime, timedelta
+from pydantic import BaseModel, EmailStr
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-import random
 import uuid
+import logging
+import random
+
+from database import get_db, engine, Base
+from models import (
+    Theme,
+    Sentence,
+    WordOption,
+    UserProgress,
+    User,
+    UserCreate,
+    UserLogin,
+    Token,
+    TokenData,
+    RegisterResponse,
+    UserResponse,
+    WordOptionResponse,
+    SentenceCreate,
+    SentenceResponse,
+    ThemeCreate,
+    ThemeResponse,
+    UserProgressResponse
+)
 
 app = FastAPI(
     title="Polish Grammar API",
-    description="API for Polish grammar learning",
+    description="API for Polish Grammar learning app",
     version="1.0.0"
 )
 
@@ -27,160 +49,23 @@ app.add_middleware(
 )
 
 # Database configuration
-SQLALCHEMY_DATABASE_URL = "sqlite:///polish_grammar.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./database.db"
+
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# --- User Model for Account Management ---
-class User(Base):
-    __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True, nullable=False)
-    hashed_password = Column(String, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    
-    progress = relationship("UserProgress", back_populates="user", cascade="all, delete-orphan")
-    
-    def __repr__(self):
-        return f"User(id={self.id}, email='{self.email}')"
+# Dependency to get database session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-class Theme(Base):
-    __tablename__ = "themes"
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, index=True, nullable=False)
-    description = Column(String)
-    total_sentences = Column(Integer, default=0)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
-    sentences = relationship("Sentence", back_populates="theme", cascade="all, delete-orphan")
-    user_progress = relationship("UserProgress", back_populates="theme", cascade="all, delete-orphan")
-    
-    def __repr__(self):
-        return f"Theme(id={self.id}, name='{self.name}')"
-
-    def get_next_sentence(self, user_id: int) -> Optional[Sentence]:
-        """Get the next sentence for a user in this theme."""
-        db = SessionLocal()
-        try:
-            progress = db.query(UserProgress).filter_by(user_id=user_id, theme_id=self.id).first()
-            if not progress:
-                return self.sentences[0] if self.sentences else None
-            
-            next_index = progress.current_sentence_index
-            if next_index >= len(self.sentences):
-                return None
-                
-            return self.sentences[next_index]
-        finally:
-            db.close()
-
-    def update_progress(self, user_id: int, sentence: Sentence) -> None:
-        """Update user's progress in this theme."""
-        db = SessionLocal()
-        try:
-            progress = db.query(UserProgress).filter_by(user_id=user_id, theme_id=self.id).first()
-            if not progress:
-                progress = UserProgress(
-                    user_id=user_id,
-                    theme_id=self.id,
-                    current_sentence_index=0,
-                    completed_sentences=0
-                )
-                db.add(progress)
-            
-            progress.current_sentence_index = self.sentences.index(sentence) + 1
-            progress.completed_sentences += 1
-            progress.last_accessed = datetime.utcnow()
-            db.commit()
-        finally:
-            db.close()
-
-class WordOption(Base):
-    __tablename__ = "word_options"
-
-    id = Column(Integer, primary_key=True, index=True)
-    unique_id = Column(String, default=lambda: str(uuid.uuid4()), unique=True, nullable=False)
-    word = Column(String)
-    is_correct = Column(Boolean)
-    sentence_id = Column(Integer, ForeignKey("sentences.id"))
-    sentence = relationship("Sentence", back_populates="word_options")
-
-class Sentence(Base):
-    __tablename__ = "sentences"
-
-    id = Column(Integer, primary_key=True, index=True)
-    sentence = Column(String, index=True)
-    tense = Column(String)
-    difficulty_level = Column(Integer)
-    theme_id = Column(Integer, ForeignKey("themes.id"))
-    order_in_theme = Column(Integer, nullable=False)
-    
-    theme = relationship("Theme", back_populates="sentences")
-    word_options = relationship("WordOption", back_populates="sentence", cascade="all, delete-orphan")
-    
-    def __repr__(self):
-        return f"Sentence(id={self.id}, sentence='{self.sentence}', theme_id={self.theme_id})"
-
-class UserProgress(Base):
-    __tablename__ = "user_progress"
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    theme_id = Column(Integer, ForeignKey("themes.id"))
-    current_sentence_index = Column(Integer, default=0)
-    completed_sentences = Column(Integer, default=0)
-    last_accessed = Column(DateTime, default=datetime.utcnow)
-    
-    user = relationship("User", back_populates="progress")
-    theme = relationship("Theme", back_populates="user_progress")
-    
-    __table_args__ = (UniqueConstraint('user_id', 'theme_id', name='_user_theme_uc'),)
-    
-    def __repr__(self):
-        return f"UserProgress(id={self.id}, user_id={self.user_id}, theme_id={self.theme_id}, completed={self.completed_sentences})"
+# All models are imported from models.py - no need to define them here
 
 Base.metadata.create_all(bind=engine)
-
-# --- Pydantic Schemas ---
-class UserCreate(BaseModel):
-    email: EmailStr
-    password: str
-
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-class TokenData(BaseModel):
-    email: Optional[str] = None
-
-class UserResponse(BaseModel):
-    id: int
-    email: EmailStr
-    class Config:
-        orm_mode = True
-
-class WordOptionResponse(BaseModel):
-    unique_id: str
-    word: str
-    is_correct: bool
-
-class SentenceCreate(BaseModel):
-    sentence: str
-    tense: str
-    difficulty_level: int
-    word_options: List[WordOptionResponse]
-
-class SentenceResponse(BaseModel):
-    id: int
-    sentence: str
-    tense: str
-    difficulty_level: int
-    word_options: List[WordOptionResponse]
 
 # --- Auth and Security Utilities ---
 SECRET_KEY = "supersecretkey123"  # Change in production
@@ -233,32 +118,19 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     return user
 
 # --- User Registration Endpoint ---
-class RegisterResponse(BaseModel):
-    id: int
-    email: EmailStr
-    access_token: str
+# Using models from models.py
 
 @app.post("/api/register", response_model=RegisterResponse)
-def register(user: UserCreate):
-    db = SessionLocal()
-    db_user = get_user_by_email(db, user.email)
-    if db_user:
-        db.close()
+def register_user(user: UserCreate, db: Session = Depends(get_db)):
+    existing = db.query(User).filter(User.email == user.email).first()
+    if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
-    
-    hashed_password = get_password_hash(user.password)
-    new_user = User(email=user.email, hashed_password=hashed_password)
-    db.add(new_user)
+    hashed_password = pwd_context.hash(user.password)
+    db_user = User(email=user.email, hashed_password=hashed_password, created_at=datetime.utcnow())
+    db.add(db_user)
     db.commit()
-    db.refresh(new_user)
-    
-    access_token = create_access_token(data={"sub": user.email})
-    db.close()
-    return {
-        "id": new_user.id,
-        "email": new_user.email,
-        "access_token": access_token
-    }
+    db.refresh(db_user)
+    return RegisterResponse(id=db_user.id, email=db_user.email)
 
 # --- User Login Endpoint ---
 @app.post("/api/login", response_model=Token)
@@ -266,8 +138,179 @@ def login(login_data: UserLogin):
     db = SessionLocal()
     try:
         # Get the user from the database
+        db_user = get_user_by_email(db, login_data.email)
+        if not db_user:
+            raise HTTPException(status_code=401, detail="User not found")
+            
+        # Verify the password
+        if not verify_password(login_data.password, db_user.hashed_password):
+            raise HTTPException(status_code=401, detail="Incorrect password")
+            
+        # Create and return the access token
+        access_token = create_access_token(data={"sub": db_user.email})
+        return {"access_token": access_token, "token_type": "bearer"}
+    finally:
+        db.close()
 
 # --- Theme Management Endpoints ---
+@app.get("/api/themes", response_model=List[ThemeResponse])
+def get_themes(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get all main themes and their subthemes, with sentence counts and user progress."""
+    main_themes = db.query(Theme).filter(Theme.parent_theme_id.is_(None)).all()
+    response = []
+    for theme in main_themes:
+        progress = db.query(UserProgress).filter_by(user_id=current_user.id, theme_id=theme.id).first()
+        completed = progress.completed_sentences if progress else 0
+        response.append({
+            "id": theme.id,
+            "name": theme.name,
+            "description": theme.description,
+            "total_sentences": len(theme.sentences),
+            "completed_sentences": completed,
+            "created_at": theme.created_at,
+            "updated_at": theme.updated_at
+        })
+    return response
+
+@app.get("/api/themes/{theme_id}/subthemes", response_model=List[ThemeResponse])
+def get_subthemes(theme_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get all subthemes for a specific theme, including correct total_sentences and user progress."""
+    theme = db.query(Theme).filter(Theme.id == theme_id).first()
+    if not theme:
+        raise HTTPException(status_code=404, detail="Theme not found")
+    subthemes = theme.get_all_subthemes()
+    response = []
+    for subtheme in subthemes:
+        progress = db.query(UserProgress).filter_by(user_id=current_user.id, theme_id=subtheme.id).first()
+        completed = progress.completed_sentences if progress else 0
+        response.append({
+            "id": subtheme.id,
+            "name": subtheme.name,
+            "description": subtheme.description,
+            "total_sentences": len(subtheme.sentences),
+            "completed_sentences": completed,
+            "created_at": subtheme.created_at,
+            "updated_at": subtheme.updated_at
+        })
+    return response
+
+@app.get("/api/themes/{theme_id}/sentences", response_model=List[SentenceResponse])
+def get_theme_sentences(theme_id: int, db: Session = Depends(get_db)):
+    """Get all sentences for a theme or subtheme."""
+    theme = db.query(Theme).filter(Theme.id == theme_id).first()
+    if not theme:
+        raise HTTPException(status_code=404, detail="Theme not found")
+    return theme.sentences
+
+@app.get("/api/themes/{theme_id}/progress", response_model=UserProgressResponse)
+def get_theme_progress(theme_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get user progress for a theme or subtheme."""
+    progress = db.query(UserProgress).filter_by(user_id=current_user.id, theme_id=theme_id).first()
+    if not progress:
+        raise HTTPException(status_code=404, detail="No progress found for this theme")
+    return progress
+
+@app.get("/api/themes/{theme_id}/next_sentence", response_model=SentenceResponse)
+def get_next_sentence(theme_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get the next sentence for the user in the theme/subtheme."""
+    try:
+        # Step 1: Get the theme
+        theme = db.query(Theme).filter(Theme.id == theme_id).first()
+        if not theme:
+            raise HTTPException(status_code=404, detail="Theme not found")
+            
+        # Step 2: Get all sentences for this theme
+        sentences = db.query(Sentence).filter(Sentence.theme_id == theme_id).order_by(Sentence.order_in_theme).all()
+        if not sentences:
+            raise HTTPException(status_code=404, detail="No sentences in this theme")
+            
+        # Step 3: Get user progress
+        progress = db.query(UserProgress).filter_by(user_id=current_user.id, theme_id=theme_id).first()
+        next_index = progress.current_sentence_index if progress else 0
+        
+        # Step 4: Validate index
+        if next_index < 0:
+            next_index = 0
+        if next_index >= len(sentences):
+            raise HTTPException(status_code=404, detail="No more sentences left in this theme")
+            
+        # Step 5: Get the next sentence
+        sentence = sentences[next_index]
+        
+        # Step 6: Get word options separately
+        word_options = db.query(WordOption).filter(WordOption.sentence_id == sentence.id).all()
+        
+        # Step 7: Create the response
+        return {
+            "id": sentence.id,
+            "sentence": sentence.sentence,
+            "tense": sentence.tense,
+            "difficulty_level": sentence.difficulty_level,
+            "word_options": [
+                {
+                    "unique_id": opt.unique_id,
+                    "word": opt.word,
+                    "is_correct": opt.is_correct
+                } for opt in word_options
+            ],
+            "theme_id": sentence.theme_id,
+            "order_in_theme": sentence.order_in_theme
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        import traceback
+        tb = traceback.format_exc()
+        logging.error(f"Full traceback for get_next_sentence error: {tb}")
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {e}")
+
+@app.post("/api/progress")
+def update_progress(theme_id: int, sentence_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Update user progress after completing a sentence."""
+    theme = db.query(Theme).filter(Theme.id == theme_id).first()
+    if not theme:
+        raise HTTPException(status_code=404, detail="Theme not found")
+    sentence = db.query(Sentence).filter(Sentence.id == sentence_id, Sentence.theme_id == theme_id).first()
+    if not sentence:
+        raise HTTPException(status_code=404, detail="Sentence not found in this theme")
+    progress = db.query(UserProgress).filter_by(user_id=current_user.id, theme_id=theme_id).first()
+    if not progress:
+        progress = UserProgress(
+            user_id=current_user.id,
+            theme_id=theme_id,
+            current_sentence_index=1,
+            completed_sentences=1,
+            last_accessed=datetime.utcnow()
+        )
+        db.add(progress)
+    else:
+        progress.current_sentence_index += 1
+        progress.completed_sentences += 1
+        progress.last_accessed = datetime.utcnow()
+    db.commit()
+    return {"status": "success"}
+
+@app.get("/api/themes/{theme_id}/subthemes", response_model=List[ThemeResponse])
+def get_subthemes(theme_id: int, db: Session = Depends(get_db)):
+    """Get all subthemes for a specific theme, including correct total_sentences."""
+    theme = db.query(Theme).filter(Theme.id == theme_id).first()
+    if not theme:
+        raise HTTPException(status_code=404, detail="Theme not found")
+    subthemes = theme.get_all_subthemes()
+    response = []
+    for subtheme in subthemes:
+        response.append(
+            ThemeResponse(
+                id=subtheme.id,
+                name=subtheme.name,
+                description=subtheme.description,
+                total_sentences=len(subtheme.sentences),
+                created_at=subtheme.created_at,
+                updated_at=subtheme.updated_at
+            )
+        )
+    return response
+
 @app.post("/api/themes", response_model=ThemeResponse)
 def create_theme(theme: ThemeCreate, db: Session = Depends(get_db)):
     db_theme = Theme(**theme.dict())
@@ -282,39 +325,8 @@ def get_user_progress(current_user: User = Depends(get_current_user), db: Sessio
     return db.query(UserProgress).filter(UserProgress.user_id == current_user.id).all()
     password: str
 
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-class TokenData(BaseModel):
-    email: Optional[str] = None
-
-class UserResponse(BaseModel):
-    id: int
-    email: EmailStr
-    class Config:
-        orm_mode = True
-
-class WordOptionResponse(BaseModel):
-    unique_id: str
-    word: str
-    is_correct: bool
-
-class SentenceCreate(BaseModel):
-    sentence: str
-    tense: str
-    difficulty_level: int
-    word_options: List[WordOptionResponse]
-class SentenceResponse(BaseModel):
-    id: int
-    sentence: str
-    tense: str
-    difficulty_level: int
-    word_options: List[WordOptionResponse]
+# All models are imported from models.py
+# All models are imported from models.py
 
 
 
@@ -382,40 +394,150 @@ async def create_sentence(sentence: SentenceCreate):
         db.close()
 
 def init_db():
+    """Initialize the database with themes and subthemes."""
     db = SessionLocal()
     try:
-        # Add some sample sentences
-        sample_sentences = [
-            {
-                "sentence": "On _____ (jeść) obiad.",
-                "correct_answer": "je",  # present tense, 3rd person singular
-                "verb_form": "present",
-                "tense": "imperfective",
-                "difficulty_level": 1
-            },
-            {
-                "sentence": "Oni _____ (pójść) do szkoły.",
-                "correct_answer": "idą",  # present tense, 3rd person plural
-                "verb_form": "present",
-                "tense": "imperfective",
-                "difficulty_level": 1
-            },
-            {
-                "sentence": "On _____ (pójść) do domu wczoraj.",
-                "correct_answer": "poszedł",  # past tense, 3rd person singular
-                "verb_form": "past",
-                "tense": "perfective",
-                "difficulty_level": 2
-            }
+        # Create tables
+        Base.metadata.create_all(bind=engine)
+        
+        # Create main themes
+        cases = Theme(
+            name="Cases",
+            description="Practice Polish cases",
+            created_at=datetime.utcnow()
+        )
+        
+        verb_conjugation = Theme(
+            name="Verb Conjugation",
+            description="Practice verb conjugation",
+            created_at=datetime.utcnow()
+        )
+        
+        aspect = Theme(
+            name="Aspect of Verbs",
+            description="Practice verb aspects",
+            created_at=datetime.utcnow()
+        )
+        
+        plural_forms = Theme(
+            name="Plural Forms and Usage",
+            description="Practice plural forms",
+            created_at=datetime.utcnow()
+        )
+        
+        pronouns = Theme(
+            name="Pronouns",
+            description="Practice pronouns",
+            created_at=datetime.utcnow()
+        )
+        
+        particles = Theme(
+            name="Particles and Prepositions",
+            description="Practice particles and prepositions",
+            created_at=datetime.utcnow()
+        )
+        
+        complex_sentences = Theme(
+            name="Complex Sentences",
+            description="Practice complex sentence structures",
+            created_at=datetime.utcnow()
+        )
+        
+        question_structures = Theme(
+            name="Question Structures",
+            description="Practice question formations",
+            created_at=datetime.utcnow()
+        )
+        
+        # Add main themes first
+        db.add_all([
+            cases, verb_conjugation, aspect, plural_forms, pronouns,
+            particles, complex_sentences, question_structures
+        ])
+        db.commit()  # Commit to get IDs
+        
+        # Add subthemes with proper parent IDs
+        cases_subthemes = [
+            Theme(
+                name="Nominative",
+                description="Practice nominative case",
+                parent_theme_id=cases.id,
+                created_at=datetime.utcnow()
+            ),
+            Theme(
+                name="Genitive",
+                description="Practice genitive case",
+                parent_theme_id=cases.id,
+                created_at=datetime.utcnow()
+            ),
+            Theme(
+                name="Dative",
+                description="Practice dative case",
+                parent_theme_id=cases.id,
+                created_at=datetime.utcnow()
+            ),
+            Theme(
+                name="Accusative",
+                description="Practice accusative case",
+                parent_theme_id=cases.id,
+                created_at=datetime.utcnow()
+            ),
+            Theme(
+                name="Instrumental",
+                description="Practice instrumental case",
+                parent_theme_id=cases.id,
+                created_at=datetime.utcnow()
+            ),
+            Theme(
+                name="Locative",
+                description="Practice locative case",
+                parent_theme_id=cases.id,
+                created_at=datetime.utcnow()
+            )
         ]
-
-        # Add sentences to database if they don't exist
-        existing_sentences = db.query(Sentence).count()
-        if existing_sentences == 0:
-            for sentence_data in sample_sentences:
-                sentence = Sentence(**sentence_data)
-                db.add(sentence)
-            db.commit()
+        
+        verb_conjugation_subthemes = [
+            Theme(
+                name="Present",
+                description="Practice present tense",
+                parent_theme_id=verb_conjugation.id,
+                created_at=datetime.utcnow()
+            ),
+            Theme(
+                name="Past",
+                description="Practice past tense",
+                parent_theme_id=verb_conjugation.id,
+                created_at=datetime.utcnow()
+            ),
+            Theme(
+                name="Future",
+                description="Practice future tense",
+                parent_theme_id=verb_conjugation.id,
+                created_at=datetime.utcnow()
+            )
+        ]
+        
+        aspect_subthemes = [
+            Theme(
+                name="Perfective",
+                description="Practice perfective aspect",
+                parent_theme_id=aspect.id,
+                created_at=datetime.utcnow()
+            ),
+            Theme(
+                name="Imperfective",
+                description="Practice imperfective aspect",
+                parent_theme_id=aspect.id,
+                created_at=datetime.utcnow()
+            )
+        ]
+        
+        # Add subthemes
+        db.add_all([
+            *cases_subthemes, *verb_conjugation_subthemes, *aspect_subthemes
+        ])
+        db.commit()
+        
     finally:
         db.close()
 
