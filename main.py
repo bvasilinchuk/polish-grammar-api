@@ -423,6 +423,51 @@ def update_progress(request: dict = Body(...), current_user: User = Depends(get_
         print(f"[ERROR] Traceback: {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
+@app.post("/api/themes/{theme_id}/reset_progress")
+def reset_theme_progress(theme_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    try:
+        # Check if the theme exists
+        theme = db.query(Theme).filter(Theme.id == theme_id).first()
+        if not theme:
+            raise HTTPException(status_code=404, detail="Theme not found")
+        
+        # Get all user progress entries for this theme
+        progress_entries = db.query(UserProgress).filter(
+            UserProgress.user_id == current_user.id,
+            UserProgress.theme_id == theme_id,
+            UserProgress.completed == True
+        ).all()
+        
+        # Reset progress for all sentences in this theme
+        for entry in progress_entries:
+            entry.completed = False
+        
+        # Also reset progress for subthemes if this is a main theme
+        if theme.parent_id is None:
+            # Get all subthemes
+            subthemes = db.query(Theme).filter(Theme.parent_id == theme_id).all()
+            for subtheme in subthemes:
+                # Reset progress for all sentences in this subtheme
+                subtheme_entries = db.query(UserProgress).filter(
+                    UserProgress.user_id == current_user.id,
+                    UserProgress.theme_id == subtheme.id,
+                    UserProgress.completed == True
+                ).all()
+                
+                for entry in subtheme_entries:
+                    entry.completed = False
+        
+        db.commit()
+        
+        return {"status": "success", "message": "Progress reset successfully"}
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        print(f"[ERROR] Error resetting progress: {str(e)}")
+        import traceback
+        print(f"[ERROR] Traceback: {traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
 @app.get("/api/themes/{theme_id}/subthemes", response_model=List[ThemeResponse])
 def get_subthemes(theme_id: int, db: Session = Depends(get_db)):
     """Get all subthemes for a specific theme, including correct total_sentences."""
