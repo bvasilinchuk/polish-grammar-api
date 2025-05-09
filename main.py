@@ -360,28 +360,55 @@ def get_next_sentence(theme_id: int, current_user: User = Depends(get_current_us
 @app.post("/api/progress")
 def update_progress(theme_id: int, sentence_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     """Update user progress after completing a sentence."""
-    theme = db.query(Theme).filter(Theme.id == theme_id).first()
-    if not theme:
-        raise HTTPException(status_code=404, detail="Theme not found")
-    sentence = db.query(Sentence).filter(Sentence.id == sentence_id, Sentence.theme_id == theme_id).first()
-    if not sentence:
-        raise HTTPException(status_code=404, detail="Sentence not found in this theme")
-    progress = db.query(UserProgress).filter_by(user_id=current_user.id, theme_id=theme_id).first()
-    if not progress:
-        progress = UserProgress(
-            user_id=current_user.id,
-            theme_id=theme_id,
-            current_sentence_index=1,
-            completed_sentences=1,
-            last_accessed=datetime.utcnow()
-        )
-        db.add(progress)
-    else:
-        progress.current_sentence_index += 1
-        progress.completed_sentences += 1
-        progress.last_accessed = datetime.utcnow()
-    db.commit()
-    return {"status": "success"}
+    try:
+        print(f"[DEBUG] Updating progress for user {current_user.id} ({current_user.email}), theme {theme_id}, sentence {sentence_id}")
+        
+        # Step 1: Get the theme
+        theme = db.query(Theme).filter(Theme.id == theme_id).first()
+        if not theme:
+            print(f"[DEBUG] Theme {theme_id} not found")
+            raise HTTPException(status_code=404, detail="Theme not found")
+        print(f"[DEBUG] Found theme: {theme.id} - {theme.name}")
+        
+        # Step 2: Get the sentence
+        sentence = db.query(Sentence).filter(Sentence.id == sentence_id, Sentence.theme_id == theme_id).first()
+        if not sentence:
+            print(f"[DEBUG] Sentence {sentence_id} not found in theme {theme_id}")
+            raise HTTPException(status_code=404, detail="Sentence not found in this theme")
+        print(f"[DEBUG] Found sentence: {sentence.id} - {sentence.polish_text}")
+        
+        # Step 3: Get or create user progress
+        progress = db.query(UserProgress).filter_by(user_id=current_user.id, theme_id=theme_id).first()
+        if not progress:
+            print(f"[DEBUG] No existing progress found, creating new progress record")
+            progress = UserProgress(
+                user_id=current_user.id,
+                theme_id=theme_id,
+                current_sentence_index=1,
+                completed_sentences=1,
+                last_accessed=datetime.utcnow()
+            )
+            db.add(progress)
+            print(f"[DEBUG] Created new progress: completed_sentences=1")
+        else:
+            print(f"[DEBUG] Existing progress found: completed_sentences={progress.completed_sentences}")
+            progress.current_sentence_index += 1
+            progress.completed_sentences += 1
+            progress.last_accessed = datetime.utcnow()
+            print(f"[DEBUG] Updated progress: completed_sentences={progress.completed_sentences}")
+        
+        # Step 4: Commit changes
+        db.commit()
+        print(f"[DEBUG] Successfully committed progress update")
+        
+        return {"status": "success", "completed_sentences": progress.completed_sentences}
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        print(f"[ERROR] Error updating progress: {str(e)}")
+        import traceback
+        print(f"[ERROR] Traceback: {traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.get("/api/themes/{theme_id}/subthemes", response_model=List[ThemeResponse])
 def get_subthemes(theme_id: int, db: Session = Depends(get_db)):

@@ -183,6 +183,7 @@ class ThemeResponse(BaseModel):
     name: str
     description: Optional[str]
     total_sentences: int = 0
+    completed_sentences: int = 0
     created_at: datetime
     updated_at: datetime
     
