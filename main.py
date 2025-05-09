@@ -170,11 +170,8 @@ def init_db():
 
 if __name__ == "__main__":
     import logging
-    
     # Configure logging
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
-    
     init_db()
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # Do not run uvicorn here; Railway will start the server using the external command.
