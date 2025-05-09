@@ -138,19 +138,6 @@ def login(login_data: UserLogin, db: Session = Depends(get_db)):
     try:
         print(f"Login attempt for email: {login_data.email}")
         
-        # TEMPORARY SOLUTION: For testing purposes, skip database validation
-        # and return a valid token for any login attempt
-        print("TEMPORARY: Bypassing database validation for testing")
-        
-        # Create a temporary access token
-        print("Creating temporary access token")
-        access_token = create_access_token(data={"sub": login_data.email})
-        print("Access token created successfully")
-        
-        return {"access_token": access_token, "token_type": "bearer"}
-        
-        # Original code (commented out for now)
-        '''
         # Get the user from the database
         db_user = get_user_by_email(db, login_data.email)
         print(f"User found: {db_user is not None}")
@@ -173,37 +160,60 @@ def login(login_data: UserLogin, db: Session = Depends(get_db)):
         print("Access token created successfully")
         
         return {"access_token": access_token, "token_type": "bearer"}
-        '''
     except Exception as e:
         print(f"Error in login endpoint: {str(e)}")
         print(f"Exception type: {type(e).__name__}")
         import traceback
         print(f"Traceback: {traceback.format_exc()}")
-        
-        # TEMPORARY: Return a valid token even if there's an error
-        print("TEMPORARY: Returning fallback token due to error")
-        access_token = create_access_token(data={"sub": login_data.email})
-        return {"access_token": access_token, "token_type": "bearer"}
+        raise
 
 # --- Theme Management Endpoints ---
 @app.get("/api/themes", response_model=List[ThemeResponse])
 def get_themes(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     """Get all main themes and their subthemes, with sentence counts and user progress."""
-    main_themes = db.query(Theme).filter(Theme.parent_theme_id.is_(None)).all()
-    response = []
-    for theme in main_themes:
-        progress = db.query(UserProgress).filter_by(user_id=current_user.id, theme_id=theme.id).first()
-        completed = progress.completed_sentences if progress else 0
-        response.append({
-            "id": theme.id,
-            "name": theme.name,
-            "description": theme.description,
-            "total_sentences": len(theme.sentences),
-            "completed_sentences": completed,
-            "created_at": theme.created_at,
-            "updated_at": theme.updated_at
-        })
-    return response
+    try:
+        print(f"Fetching themes for user: {current_user.email}")
+        
+        # Get all main themes (those without a parent)
+        print("Querying main themes")
+        main_themes = db.query(Theme).filter(Theme.parent_theme_id.is_(None)).all()
+        print(f"Found {len(main_themes)} main themes")
+        
+        response = []
+        for theme in main_themes:
+            print(f"Processing theme: {theme.id} - {theme.name}")
+            
+            # Get user progress for this theme
+            print(f"Querying progress for user {current_user.id} and theme {theme.id}")
+            progress = db.query(UserProgress).filter_by(user_id=current_user.id, theme_id=theme.id).first()
+            completed = progress.completed_sentences if progress else 0
+            print(f"Completed sentences: {completed}")
+            
+            # Get sentence count
+            sentence_count = len(theme.sentences)
+            print(f"Total sentences: {sentence_count}")
+            
+            # Build response object
+            theme_response = {
+                "id": theme.id,
+                "name": theme.name,
+                "description": theme.description,
+                "total_sentences": sentence_count,
+                "completed_sentences": completed,
+                "created_at": theme.created_at,
+                "updated_at": theme.updated_at
+            }
+            response.append(theme_response)
+            print(f"Added theme to response: {theme.name}")
+        
+        print(f"Returning {len(response)} themes")
+        return response
+    except Exception as e:
+        print(f"Error in get_themes endpoint: {str(e)}")
+        print(f"Exception type: {type(e).__name__}")
+        import traceback
+        print(f"Traceback: {traceback.format_exc()}")
+        raise
 
 @app.get("/api/themes/{theme_id}/subthemes", response_model=List[ThemeResponse])
 def get_subthemes(theme_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
