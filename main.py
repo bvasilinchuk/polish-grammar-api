@@ -39,6 +39,63 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+    
+    progress = relationship("UserProgress", back_populates="user", cascade="all, delete-orphan")
+    
+    def __repr__(self):
+        return f"User(id={self.id}, email='{self.email}')"
+
+class Theme(Base):
+    __tablename__ = "themes"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, index=True, nullable=False)
+    description = Column(String)
+    total_sentences = Column(Integer, default=0)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    sentences = relationship("Sentence", back_populates="theme", cascade="all, delete-orphan")
+    user_progress = relationship("UserProgress", back_populates="theme", cascade="all, delete-orphan")
+    
+    def __repr__(self):
+        return f"Theme(id={self.id}, name='{self.name}')"
+
+    def get_next_sentence(self, user_id: int) -> Optional[Sentence]:
+        """Get the next sentence for a user in this theme."""
+        db = SessionLocal()
+        try:
+            progress = db.query(UserProgress).filter_by(user_id=user_id, theme_id=self.id).first()
+            if not progress:
+                return self.sentences[0] if self.sentences else None
+            
+            next_index = progress.current_sentence_index
+            if next_index >= len(self.sentences):
+                return None
+                
+            return self.sentences[next_index]
+        finally:
+            db.close()
+
+    def update_progress(self, user_id: int, sentence: Sentence) -> None:
+        """Update user's progress in this theme."""
+        db = SessionLocal()
+        try:
+            progress = db.query(UserProgress).filter_by(user_id=user_id, theme_id=self.id).first()
+            if not progress:
+                progress = UserProgress(
+                    user_id=user_id,
+                    theme_id=self.id,
+                    current_sentence_index=0,
+                    completed_sentences=0
+                )
+                db.add(progress)
+            
+            progress.current_sentence_index = self.sentences.index(sentence) + 1
+            progress.completed_sentences += 1
+            progress.last_accessed = datetime.utcnow()
+            db.commit()
+        finally:
+            db.close()
 
 class WordOption(Base):
     __tablename__ = "word_options"
@@ -55,9 +112,33 @@ class Sentence(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     sentence = Column(String, index=True)
-    tense = Column(String)      # e.g., "perfective", "imperfective"
+    tense = Column(String)
     difficulty_level = Column(Integer)
+    theme_id = Column(Integer, ForeignKey("themes.id"))
+    order_in_theme = Column(Integer, nullable=False)
+    
+    theme = relationship("Theme", back_populates="sentences")
     word_options = relationship("WordOption", back_populates="sentence", cascade="all, delete-orphan")
+    
+    def __repr__(self):
+        return f"Sentence(id={self.id}, sentence='{self.sentence}', theme_id={self.theme_id})"
+
+class UserProgress(Base):
+    __tablename__ = "user_progress"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    theme_id = Column(Integer, ForeignKey("themes.id"))
+    current_sentence_index = Column(Integer, default=0)
+    completed_sentences = Column(Integer, default=0)
+    last_accessed = Column(DateTime, default=datetime.utcnow)
+    
+    user = relationship("User", back_populates="progress")
+    theme = relationship("Theme", back_populates="user_progress")
+    
+    __table_args__ = (UniqueConstraint('user_id', 'theme_id', name='_user_theme_uc'),)
+    
+    def __repr__(self):
+        return f"UserProgress(id={self.id}, user_id={self.user_id}, theme_id={self.theme_id}, completed={self.completed_sentences})"
 
 Base.metadata.create_all(bind=engine)
 
@@ -185,23 +266,20 @@ def login(login_data: UserLogin):
     db = SessionLocal()
     try:
         # Get the user from the database
-        db_user = get_user_by_email(db, login_data.email)
-        if not db_user:
-            raise HTTPException(status_code=401, detail="User not found")
-            
-        # Verify the password
-        if not verify_password(login_data.password, db_user.hashed_password):
-            raise HTTPException(status_code=401, detail="Incorrect password")
-            
-        # Create and return the access token
-        access_token = create_access_token(data={"sub": db_user.email})
-        return {"access_token": access_token, "token_type": "bearer"}
-    finally:
-        db.close()
 
-# --- Pydantic Schemas for User Management ---
-class UserCreate(BaseModel):
-    email: EmailStr
+# --- Theme Management Endpoints ---
+@app.post("/api/themes", response_model=ThemeResponse)
+def create_theme(theme: ThemeCreate, db: Session = Depends(get_db)):
+    db_theme = Theme(**theme.dict())
+    db.add(db_theme)
+    db.commit()
+    db.refresh(db_theme)
+    return db_theme
+
+@app.get("/api/user/progress", response_model=List[UserProgressResponse])
+def get_user_progress(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get progress for all themes for the current user."""
+    return db.query(UserProgress).filter(UserProgress.user_id == current_user.id).all()
     password: str
 
 class UserLogin(BaseModel):
