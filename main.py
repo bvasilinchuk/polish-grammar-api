@@ -65,7 +65,40 @@ def get_db():
 
 # All models are imported from models.py - no need to define them here
 
+# Ensure database tables are created
+print("Initializing database tables...")
+from models import User, Theme, Sentence, WordOption, UserProgress  # Import all models to ensure they're registered
 Base.metadata.create_all(bind=engine)
+print("Database tables created successfully")
+
+# Check if users table exists and has data
+def initialize_database():
+    print("Checking if database needs initialization...")
+    db = SessionLocal()
+    try:
+        # Check if users table exists and has data
+        user_count = db.query(User).count()
+        print(f"Found {user_count} users in database")
+        
+        # If no users, create a test user
+        if user_count == 0:
+            print("Creating test user...")
+            hashed_password = pwd_context.hash("Qwerty12")
+            test_user = User(
+                email="test1@mail.ru",
+                hashed_password=hashed_password,
+                created_at=datetime.utcnow()
+            )
+            db.add(test_user)
+            db.commit()
+            print("Test user created successfully")
+    except Exception as e:
+        print(f"Error during database initialization: {str(e)}")
+    finally:
+        db.close()
+
+# Run initialization
+initialize_database()
 
 # --- Auth and Security Utilities ---
 SECRET_KEY = "supersecretkey123"  # Change in production
