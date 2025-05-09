@@ -152,20 +152,23 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     return user
 
 # --- User Registration Endpoint ---
-@app.post("/api/register", response_model=UserResponse)
+@app.post("/api/register", response_model=Token)
 def register(user: UserCreate):
     db = SessionLocal()
     db_user = get_user_by_email(db, user.email)
     if db_user:
         db.close()
         raise HTTPException(status_code=400, detail="Email already registered")
+    
     hashed_password = get_password_hash(user.password)
     new_user = User(email=user.email, hashed_password=hashed_password)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
+    
+    access_token = create_access_token(data={"sub": user.email})
     db.close()
-    return new_user
+    return {"access_token": access_token, "token_type": "bearer"}
 
 # --- User Login Endpoint ---
 @app.post("/api/login", response_model=Token)
